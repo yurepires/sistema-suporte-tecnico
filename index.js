@@ -3,7 +3,10 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import Handlebars from 'handlebars'
 import handlebars from 'express-handlebars'
+import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access'
 import bodyParser from 'body-parser'
+import session from 'express-session'
+import flash from 'connect-flash'
 
 const app = express()
 const port = 8090
@@ -14,12 +17,28 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // CONFIGURAÇÃO DA VISÃO
 app.engine('handlebars', handlebars.engine({
-    defaultLayout: 'main'
+    defaultLayout: 'main',
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 }))
 app.set('view engine', 'handlebars')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+
+// CONFIGURAÇÕES DE MENSAGENS
+app.use(session({
+    secret: '65bceeb8471a63c0cb6936ad17cbf204e0b9cdf1716c0ab1856abedb38101177',
+    resave: true,
+    saveUninitialized: false
+}))
+app.use(flash())
+
+// middleware
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg')
+    res.locals.error_msg = req.flash('error_msg')
+    next()
+})
 
 // ROTAS DO SISTEMA
 
@@ -32,6 +51,9 @@ app.use('/pessoa', pessoa)
 
 import usuario from './routes/usuario.js'
 app.use('/usuario', usuario)
+
+import chamados from './routes/chamado.js'
+app.use('/chamados', chamados)
 
 app.listen(port, () => {
     console.log("Servidor rodando em http://localhost:"+port)

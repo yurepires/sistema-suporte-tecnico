@@ -14,15 +14,18 @@ class UsuarioController {
         })
 
         if (!usuario) {
+            req.flash('error_msg', 'Email inexistente!')
             return res.redirect('/pessoa/cadastro')
         }
 
         const isMatch = await bcrypt.compare(req.body.senha, usuario.senha)
 
         if (!isMatch) {
-            return res.redirect('/pessoa/cadastro')
+            req.flash('error_msg', 'Senha incorreta!')
+            return res.redirect('/usuario/login')
         }
 
+        req.flash('success_msg', 'Login feito com sucesso!')
         res.redirect('/')
     }
 }

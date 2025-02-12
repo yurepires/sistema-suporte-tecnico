@@ -3,6 +3,8 @@ import PessoaController from '../controllers/PessoaController.js'
 
 const router = express.Router()
 
+router.get('/', PessoaController.index)
+
 router.get('/cadastro', PessoaController.formularioCadastro)
 
 router.post('/cadastro', PessoaController.cadastrar)

@@ -4,6 +4,11 @@ import bcrypt from 'bcrypt'
 
 class PessoaController{
 
+    index = async (req, res) => {
+        const pessoas = await Pessoa.findAll()
+        res.render('pessoa/index', {pessoas: pessoas})
+    }
+
     formularioCadastro = (req, res) => {
         res.render('pessoa/cadastro')
     }
@@ -16,6 +21,7 @@ class PessoaController{
         })
 
         if(pessoa){
+            req.flash('error_msg', 'Cliente com esse CPF já está cadastrado!')
             return res.redirect('/pessoa/cadastro')
         }
 
@@ -37,7 +43,10 @@ class PessoaController{
                 pessoa_id: novaPessoa.id
             }
             Usuario.create(novoUsuario).then(() => {
+                req.flash('success_msg', 'Cliente cadastrado com sucesso!')
                 res.redirect('/usuario/login')
+            }).catch((error) => {
+                req.flash('error_msg', error.message)
             })
         })
     }
