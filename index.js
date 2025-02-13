@@ -7,6 +7,9 @@ import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access
 import bodyParser from 'body-parser'
 import session from 'express-session'
 import flash from 'connect-flash'
+import passport from 'passport'
+import auth from './config/auth.js'
+auth(passport)
 
 const app = express()
 const port = 8090
@@ -31,12 +34,16 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 // middleware
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg')
     res.locals.error_msg = req.flash('error_msg')
+    res.locals.error = req.flash('error')
+    res.locals.usuario = req.user || null
     next()
 })
 
@@ -54,6 +61,9 @@ app.use('/usuario', usuario)
 
 import chamados from './routes/chamado.js'
 app.use('/chamados', chamados)
+
+import atendimentos from './routes/atendimento.js'
+app.use('/atendimentos', atendimentos)
 
 app.listen(port, () => {
     console.log("Servidor rodando em http://localhost:"+port)

@@ -39,7 +39,7 @@ class PessoaController{
                 email: req.body.email,
                 senha: hashSenha,
                 tipo: 0,
-                status: 1,
+                status: "Padrão",
                 pessoa_id: novaPessoa.id
             }
             Usuario.create(novoUsuario).then(() => {

@@ -24,7 +24,7 @@ class ChamadoController {
 
         const novoChamado = {
             descricao: req.body.descricao,
-            status: "Em espera",
+            status: "Pendente",
             cliente_id: pessoa.id
         }
         Chamado.create(novoChamado).then(() => {

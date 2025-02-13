@@ -17,9 +17,6 @@ const Pessoa = banco.sequelize.define('pessoas', {
     telefone:{
         type: banco.Sequelize.STRING(16)
     },
-    status:{
-        type: banco.Sequelize.INTEGER
-    }
 })
 
 // Pessoa.sync()
