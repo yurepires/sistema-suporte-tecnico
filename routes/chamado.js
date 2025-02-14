@@ -3,10 +3,16 @@ import ChamadoController from '../controllers/ChamadoController.js'
 
 const router = express.Router()
 
-router.get('/', ChamadoController.index)
+router.get('/meuschamados', ChamadoController.usuarioChamados)
 
-router.get('/cadastro', ChamadoController.cadastrar)
+router.get('/cadastro', (req, res) => {res.render('chamados/cadastro')})
 
-router.post('/cadastro', ChamadoController.salvar)
+router.post('/cadastro', ChamadoController.cadastrar)
+
+router.get('/editar/:id', ChamadoController.editar)
+
+router.post('/editar', ChamadoController.salvar)
+
+router.get('/excluir/:id', ChamadoController.excluir)
 
 export default router

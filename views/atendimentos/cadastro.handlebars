@@ -6,7 +6,7 @@
             <p>{{atendimento.status}}</p>
             <button type="submit" name="id" value="{{atendimento.id}}">Concluir</button>
         </form>
-        <button type="submit" onclick="excluirProduto({{atendimento.id}})">Excluir</button>
+        <button type="submit" onclick="excluirAtendimento({{atendimento.id}})">Excluir</button>
     </div>
     {{#each chamados}}
         <form action="/atendimentos/cadastro" method="post">

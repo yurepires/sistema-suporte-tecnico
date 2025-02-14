@@ -7,8 +7,13 @@
     {{#each chamados}}
         <tr>
             <td>{{id}}</td>
+            <td>{{titulo}}</td>
             <td>{{descricao}}</td>
             <td>{{status}}</td>
+            <td>
+                <a href="/chamados/editar/{{id}}">Editar</a>
+                <button onclick="excluirChamado({{id}})">Excluir</button>
+            </td>
         </tr>
     {{/each}}
 </table>

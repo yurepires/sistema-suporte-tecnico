@@ -1,5 +1,11 @@
-function excluirProduto(id){
-    if(confirm('Tem certeza que deseja excluir o atendimento"'+id+'"?')){
+function excluirAtendimento(id){
+    if(confirm('Tem certeza que deseja excluir este atendimento?')){
         window.location.href='/atendimentos/excluir/'+id;
+    }
+}
+
+function excluirChamado(id){
+    if(confirm('Tem certeza que deseja excluir este chamado?')){
+        window.location.href='/chamados/excluir/'+id;
     }
 }

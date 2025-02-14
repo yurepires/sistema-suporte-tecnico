@@ -1,0 +1,29 @@
+<div>
+    <form action="/chamados/editar" method="post">
+        <fieldset>
+            <legend>Dados do chamado</legend>
+
+            <div>
+                <label for="id">ID</label>
+                <input type="number" name="id" id="id" value="{{chamado.id}}" readonly>
+            </div>
+
+            <div>
+                <label for="descricao">TÍTULO</label>
+                <input type="text" value="{{chamado.titulo}}" name="titulo" id="titulo" required>
+            </div>
+
+            <div>
+                <label for="descricao">DESCRICAO</label>
+                <input type="text" value="{{chamado.descricao}}" name="descricao" id="descricao" required>
+            </div>
+
+            <div>
+                <label for="status">STATUS</label>
+                <input type="text" value="{{chamado.status}}" name="status" id="status" readonly>
+            </div>
+
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>

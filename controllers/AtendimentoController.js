@@ -99,8 +99,6 @@ class AtendimentoController {
 
         const atendimento = await Atendimento.findByPk(req.params.id)
 
-        console.log(atendimento)
-
         if(!atendimento){
             req.flash('error_msg', 'Atendimento não encontrado!')
             return res.redirect('/atendimentos/pendentes')
@@ -121,12 +119,12 @@ class AtendimentoController {
             }
         })
 
-        Atendimento.update({status: 'Excluido'}, {
+        Atendimento.update({status: 'Excluído'}, {
             where:{
                 id: req.params.id
             }
         }).then(() => {
-            req.flash('success_msg', 'Atendimento excluido.')
+            req.flash('success_msg', 'Atendimento excluído.')
             return res.redirect('/atendimentos/pendentes')
         })
     }
