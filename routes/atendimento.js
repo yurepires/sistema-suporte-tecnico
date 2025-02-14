@@ -8,6 +8,6 @@ router.post('/cadastro', AtendimentoController.cadastrar)
 
 router.post('/concluir', AtendimentoController.concluir)
 
-router.get('/excluir/:id', AtendimentoController.excluir)
+router.get('/cancelar/:id', AtendimentoController.cancelar)
 
 export default router

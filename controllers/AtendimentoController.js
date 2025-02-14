@@ -52,7 +52,7 @@ class AtendimentoController {
 
         await Atendimento.create(novoAtendimento).then((novoAtendimento) => {
             Tecnico.update(
-                {disponibilidade: 'Ocupado', qtdAtendimentos: tecnico.qtdAtendimentos + 1},{
+                {disponibilidade: 'Ocupado'},{
                     where:{
                         id: tecnico.id
                     }
@@ -79,7 +79,7 @@ class AtendimentoController {
                 id: atendimento.chamado_id
             }
         })
-        Tecnico.update({disponibilidade: 'Disponível'}, {
+        Tecnico.update({disponibilidade: 'Disponível', qtdAtendimentos: tecnico.qtdAtendimentos + 1}, {
             where:{
                 id: atendimento.tecnico_id
             }
@@ -95,7 +95,7 @@ class AtendimentoController {
         })
     }
 
-    excluir = async (req, res) => {
+    cancelar = async (req, res) => {
 
         const atendimento = await Atendimento.findByPk(req.params.id)
 
@@ -104,27 +104,18 @@ class AtendimentoController {
             return res.redirect('/atendimentos/pendentes')
         }
 
-        if(atendimento.tecnico_id){
-            const tecnico = await Tecnico.findByPk(atendimento.tecnico_id)
-            Tecnico.update({qtdAtendimentos: tecnico.qtdAtendimentos - 1}, {
-                where:{
-                    id: tecnico.id
-                }
-            })
-        }
-
         Chamado.update({tecnico_id: null}, {
             where:{
                 id: atendimento.chamado_id
             }
         })
 
-        Atendimento.update({status: 'Excluído'}, {
+        Atendimento.update({status: 'Cancelado'}, {
             where:{
                 id: req.params.id
             }
         }).then(() => {
-            req.flash('success_msg', 'Atendimento excluído.')
+            req.flash('success_msg', 'Atendimento cancelado.')
             return res.redirect('/atendimentos/pendentes')
         })
     }

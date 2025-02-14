@@ -65,6 +65,12 @@ app.use('/chamados', chamados)
 import atendimentos from './routes/atendimento.js'
 app.use('/atendimentos', atendimentos)
 
+import tecnicos from './routes/tecnico.js'
+app.use('/tecnicos', tecnicos)
+
+import feedback from './routes/feedback.js'
+app.use('/feedback', feedback)
+
 app.listen(port, () => {
     console.log("Servidor rodando em http://localhost:"+port)
 })

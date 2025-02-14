@@ -7,6 +7,9 @@ const Tecnico = banco.sequelize.define('tecnicos', {
         primaryKey: true,
         autoIncrement: true
     },
+    nome:{
+        type: banco.Sequelize.STRING(100)
+    },
     disponibilidade:{
         type: banco.Sequelize.STRING(20)
     },
@@ -14,6 +17,9 @@ const Tecnico = banco.sequelize.define('tecnicos', {
         type: banco.Sequelize.FLOAT
     },
     qtdAtendimentos:{
+        type: banco.Sequelize.INTEGER
+    },
+    status:{
         type: banco.Sequelize.INTEGER
     }
 })

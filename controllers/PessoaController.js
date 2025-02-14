@@ -31,7 +31,7 @@ class PessoaController{
             telefone: req.body.telefone,
             status: 1
         }
-        Pessoa.create(novaPessoa).then(async (novaPessoa) => {
+        await Pessoa.create(novaPessoa).then(async (novaPessoa) => {
             const salt = await bcrypt.genSalt(10)
             const hashSenha = await bcrypt.hash(req.body.senha, salt)
 
@@ -39,7 +39,7 @@ class PessoaController{
                 email: req.body.email,
                 senha: hashSenha,
                 tipo: 0,
-                status: "Padrão",
+                status: 1,
                 pessoa_id: novaPessoa.id
             }
             Usuario.create(novoUsuario).then(() => {

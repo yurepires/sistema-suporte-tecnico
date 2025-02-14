@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/meuschamados', ChamadoController.usuarioChamados)
 
-router.get('/cadastro', (req, res) => {res.render('chamados/cadastro')})
+router.get('/cadastro', ChamadoController.formCadastro)
 
 router.post('/cadastro', ChamadoController.cadastrar)
 
