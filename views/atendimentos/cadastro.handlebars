@@ -1,10 +1,18 @@
 <div>
+    <div>
+        <form action="/atendimentos/concluir" method="post">
+            <h2>{{atendimento.titulo}}</h2>
+            <p>{{atendimento.descricao}}</p>
+            <p>{{atendimento.status}}</p>
+            <button type="submit" name="id" value="{{atendimento.id}}">Concluir</button>
+        </form>
+        <button type="submit" onclick="excluirProduto({{atendimento.id}})">Excluir</button>
+    </div>
     {{#each chamados}}
         <form action="/atendimentos/cadastro" method="post">
             <h2>{{titulo}}</h2>
             <p>{{descricao}}</p>
             <p>{{status}}</p>
-            <p>{{dataCriacao}}</p>
             <button type="submit" name="chamado_id" value="{{id}}">Atender</button>
         </form>
     {{/each}}
