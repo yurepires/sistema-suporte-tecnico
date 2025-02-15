@@ -80,6 +80,7 @@ class ChamadoController {
                 id: req.body.id
             }
         }).then(() => {
+            req.flash('success_msg', 'Chamado modificado com sucesso!')
             res.redirect('/chamados/meuschamados')
         })
     }

@@ -1,0 +1,29 @@
+<div>
+    <form action="/feedback/editar" method="post">
+        <fieldset>
+            <legend>Dados do feedback</legend>
+
+            <div>
+                <label for="id">ID</label>
+                <input type="number" name="id" id="id" value="{{feedback.id}}" readonly>
+            </div>
+
+            <div>
+                <label for="titulo">TÍTULO</label>
+                <input type="text" value="{{feedback.titulo}}" name="titulo" id="titulo" required>
+            </div>
+
+            <div>
+                <label for="descricao">DESCRICAO</label>
+                <input type="text" value="{{feedback.descricao}}" name="descricao" id="descricao" required>
+            </div>
+
+            <div>
+                <label for="nota">NOTA</label>
+                <input type="text" value="{{feedback.nota}}" name="nota" id="nota" required>
+            </div>
+
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>

@@ -54,6 +54,7 @@ class PessoaController{
 
         if(req.user === undefined){
             req.flash('error_msg', 'Você deve estar logado para editar seus dados')
+            return res.redirect('/usuario/login')
         }
 
         const pessoa = await Pessoa.findByPk(usuario.pessoa_id)

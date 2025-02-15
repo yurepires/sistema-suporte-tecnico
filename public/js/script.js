@@ -15,3 +15,9 @@ function excluirPessoa(){
         window.location.href='/pessoa/excluir';
     }
 }
+
+function excluirFeedback(id){
+    if(confirm('Tem certeza que deseja excluir esse feedback?')){
+        window.location.href='/feedback/excluir/'+id;
+    }
+}

@@ -9,4 +9,10 @@ router.post('/novo', FeedbackController.novoFeedback)
 
 router.get('/meusfeedbacks', FeedbackController.meusFeedbacks)
 
+router.get('/editar/:id', FeedbackController.editar)
+
+router.post('/editar', FeedbackController.salvar)
+
+router.get('/excluir/:id', FeedbackController.excluir)
+
 export default router
