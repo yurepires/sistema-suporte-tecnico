@@ -1,4 +1,3 @@
-import { Sequelize, where } from "sequelize";
 import Pessoa from "../models/Pessoa.js";
 import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
@@ -71,7 +70,7 @@ class PessoaController{
                     }
                 })
             } else {
-                req.flash('error_msg', 'Apenas administradores podem excluir outros cadastros!')
+                req.flash('error_msg', 'Apenas administradores podem editar outros cadastros!')
                 return res.redirect('/')
             }
         } else {

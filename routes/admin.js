@@ -5,4 +5,6 @@ const router = express.Router()
 
 router.get('/pessoas', AdminController.listarPessoas)
 
+router.get('/usuarios', AdminController.listarUsuarios)
+
 export default router

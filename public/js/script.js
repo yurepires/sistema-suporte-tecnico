@@ -22,6 +22,12 @@ function adminExcluirPessoa(id){
     }
 }
 
+function adminExcluirUsuario(id){
+    if(confirm('Tem certeza que deseja excluir este usuario?')){
+        window.location.href='/usuario/excluir/'+id;
+    }
+}
+
 function excluirFeedback(id){
     if(confirm('Tem certeza que deseja excluir esse feedback?')){
         window.location.href='/feedback/excluir/'+id;

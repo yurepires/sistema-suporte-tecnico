@@ -1,0 +1,25 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+        <a href="/usuario/cadastro">Novo</a>
+    </nav>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>EMAIL</th>
+            <th>TIPO</th>
+            <th>STATUS</th>
+        </tr>
+        {{#each usuarios}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{email}}</td>
+                <td>{{tipo}}</td>
+                <td>{{status}}</td>
+                <td>
+                    <button onclick="adminExcluirUsuario({{id}})">Excluir</button>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>

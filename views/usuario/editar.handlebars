@@ -1,0 +1,20 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+    </nav>
+    <form action="/usuario/editar" method="post">
+        <fieldset>
+            <legend>Seus dados</legend>
+            <div>
+                <label>NOVA SENHA</label>
+                <input type="password" name="novaSenha">
+            </div>
+            <div>
+                <label>REPITA A NOVA SENHA</label>
+                <input type="password" name="novaSenhaRepetida">
+            </div>
+            <input type="hidden" name="id" value="{{usuario.id}}">
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>
