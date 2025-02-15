@@ -42,6 +42,11 @@ class PessoaController{
             }
             Usuario.create(novoUsuario).then(() => {
                 req.flash('success_msg', 'Cliente cadastrado com sucesso!')
+                if(req.user !== undefined){
+                    if(req.user.tipo === 1){
+                        return res.redirect('/admin/pessoas')
+                    }
+                }
                 res.redirect('/usuario/login')
             }).catch((error) => {
                 req.flash('error_msg', error.message)
@@ -50,11 +55,27 @@ class PessoaController{
     }
 
     editar = async (req, res) => {
-        const usuario = await Usuario.findByPk(req.user.id)
-
+        
         if(req.user === undefined){
             req.flash('error_msg', 'Você deve estar logado para editar seus dados')
             return res.redirect('/usuario/login')
+        }
+
+        let usuario = {}
+        if(req.params.id !== undefined){
+            if(req.user.tipo === 1){
+                let pessoa = await Pessoa.findByPk(req.params.id) // o id passado na pagina admin/pessoas é de pessoa
+                usuario = await Usuario.findOne({
+                    where:{
+                        pessoa_id: pessoa.id
+                    }
+                })
+            } else {
+                req.flash('error_msg', 'Apenas administradores podem excluir outros cadastros!')
+                return res.redirect('/')
+            }
+        } else {
+            usuario = await Usuario.findByPk(req.user.id)
         }
 
         const pessoa = await Pessoa.findByPk(usuario.pessoa_id)
@@ -74,6 +95,11 @@ class PessoaController{
             }
         }).then(() => {
             req.flash('success_msg', 'Dados editados com sucesso!')
+            if(req.user !== undefined){
+                if(req.user.tipo === 1){
+                    return res.redirect('/admin/pessoas')
+                }
+            }
             res.redirect('/')
         })
     }
@@ -82,7 +108,7 @@ class PessoaController{
 
         if(req.user === undefined){
             req.flash('error_msg', 'Faça login para excluir cadastro.')
-            res.redirect('/usuario/login')
+            return res.redirect('/usuario/login')
         }
 
         let usuario = {}

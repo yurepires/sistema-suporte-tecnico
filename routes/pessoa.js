@@ -15,6 +15,7 @@ router.get('/excluir', PessoaController.excluir)
 
 // rota para o admin
 router.get('/excluir/:id', PessoaController.excluir)
+router.get('/editar/:id', PessoaController.editar)
 
 
 export default router

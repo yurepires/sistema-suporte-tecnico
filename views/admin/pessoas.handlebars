@@ -1,20 +1,26 @@
-<table>
-    <tr>
-        <th>NOME</th>
-        <th>CPF</th>
-        <th>TELEFONE</th>
-        <th>STATUS</th>
-    </tr>
-    {{#each pessoas}}
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+        <a href="/pessoa/cadastro">Novo</a>
+    </nav>
+    <table>
         <tr>
-            <td>{{nome}}</td>
-            <td>{{cpf}}</td>
-            <td>{{telefone}}</td>
-            <td>{{status}}</td>
-            <td>
-                <button onclick="adminExcluirPessoa({{id}})">Excluir</button>
-                <a href="/pessoa/editar"></a>
-            </td>
+            <th>NOME</th>
+            <th>CPF</th>
+            <th>TELEFONE</th>
+            <th>STATUS</th>
         </tr>
-    {{/each}}
-</table>
+        {{#each pessoas}}
+            <tr>
+                <td>{{nome}}</td>
+                <td>{{cpf}}</td>
+                <td>{{telefone}}</td>
+                <td>{{status}}</td>
+                <td>
+                    <button onclick="adminExcluirPessoa({{id}})">Excluir</button>
+                    <a href="/pessoa/editar/{{id}}">Editar</a>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
