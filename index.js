@@ -65,8 +65,8 @@ app.use('/chamados', chamados)
 import atendimentos from './routes/atendimento.js'
 app.use('/atendimentos', atendimentos)
 
-import tecnicos from './routes/tecnico.js'
-app.use('/tecnicos', tecnicos)
+import tecnico from './routes/tecnico.js'
+app.use('/tecnico', tecnico)
 
 import feedback from './routes/feedback.js'
 app.use('/feedback', feedback)

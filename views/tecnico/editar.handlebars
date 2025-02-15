@@ -1,0 +1,34 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+    </nav>
+    <form action="/tecnico/editar" method="post">
+        <fieldset>
+            <legend>Seus dados</legend>
+            <div>
+                <label for="id">ID</label>
+                <input type="number" name="id" id="id" value="{{tecnico.id}}" readonly>
+            </div>
+
+            <div>
+                <label for="nome">NOME</label>
+                <input type="text" value="{{tecnico.nome}}" name="nome" id="nome" required>
+            </div>
+
+            <div>
+                <label for="disponibilidade">DISPONIBILIDADE</label>
+                <input type="text" value="{{tecnico.disponibilidade}}" name="disponibilidade" id="disponibilidade" readonly>
+            </div>
+
+            <div>
+                <label for="avaliacao">AVALIAÇÃO</label>
+                <input type="text" value="{{tecnico.avaliacao}}" name="avaliacao" id="avaliacao" readonly>
+            </div>
+            <div>
+                <label for="qtdAtendimentos">QUANTIDADE DE ATENDIMENTOS</label>
+                <input type="text" value="{{tecnico.qtdAtendimentos}}" name="qtdAtendimentos" id="qtdAtendimentos" readonly>
+            </div>
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>

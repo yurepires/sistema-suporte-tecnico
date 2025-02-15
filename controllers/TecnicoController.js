@@ -13,7 +13,7 @@ class TecnicoController {
             }
         })
         
-        res.render('tecnicos/index', {tecnicos: tecnicos})
+        res.render('tecnico/index', {tecnicos: tecnicos})
     }
 
     cadastrar = async (req, res) => {
@@ -59,8 +59,16 @@ class TecnicoController {
             }
 
             Usuario.create(novoUsuario).then((novoUsuario) => {
+                // Pega o primeiro e último nome
+                let nomes = novaPessoa.nome.split(" ")
+                let nomeSobrenome = nomes[0]
+                if(nomes.length > 1){
+                    nomeSobrenome += " " + nomes[nomes.length - 1]
+                }
+
                 const novoTecnico = {
                     disponibilidade: 'Disponível',
+                    nome: nomeSobrenome,
                     avaliacao: 0.0,
                     qtdAtendimentos: 0,
                     status: 1,
@@ -71,7 +79,45 @@ class TecnicoController {
                     req.flash('success_msg', 'Técnico cadastrado com sucesso!')
                     res.redirect('/usuario/login')
                 })
-            })
+            })            
+        })
+    }
+
+    editar = async (req, res) => {
+        
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para editar dados')
+            res.redirect('/usuario/login')
+        }
+
+        if(req.user.tipo !== 2){
+            req.flash('error_msg', 'Você precisa ser técnico para acessar esta página')
+            res.redirect('/')
+        }
+
+        const tecnico = await Tecnico.findOne({
+            where:{
+                usuario_id: req.user.id
+            }
+        })
+
+        res.render('tecnico/editar', {tecnico: tecnico})
+    }
+
+    salvar = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para editar dados')
+            res.redirect('/usuario/login')
+        }
+
+        Tecnico.update({nome: req.body.nome}, {
+            where:{
+                usuario_id: req.user.id
+            }
+        }).then(() => {
+            req.flash('success_msg', 'Técnico editado com sucesso.')
+            res.redirect('/')
         })
     }
 }
