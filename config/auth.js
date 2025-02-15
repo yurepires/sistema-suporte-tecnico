@@ -16,6 +16,11 @@ export default (passport) => {
             if (!usuario) {
                 return done(null, false, {message: 'Usuário não encontrado.'})
             }
+
+            if (usuario.status === 0){
+                return done(null, false, {message: 'Este usuário foi excluído!'})
+            }
+
             const isMatch = await bcrypt.compare(password, usuario.senha)
 
             if (!isMatch) {

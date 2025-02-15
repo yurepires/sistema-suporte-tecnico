@@ -91,8 +91,6 @@ class ChamadoController {
             }
         })
 
-        console.log(req.params.id)
-
         if(atendimento){
             Atendimento.update({status: 'Cancelado'}, {
                 where:{

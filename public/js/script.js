@@ -9,3 +9,9 @@ function excluirChamado(id){
         window.location.href='/chamados/excluir/'+id;
     }
 }
+
+function excluirPessoa(){
+    if(confirm('Tem certeza que deseja excluir seu cadastro?')){
+        window.location.href='/pessoa/excluir';
+    }
+}

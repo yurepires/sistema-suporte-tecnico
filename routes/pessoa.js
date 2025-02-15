@@ -11,5 +11,7 @@ router.post('/cadastro', PessoaController.cadastrar)
 router.get('/editar', PessoaController.editar)
 router.post('/editar', PessoaController.salvar)
 
+router.get('/excluir', PessoaController.excluir)
+
 
 export default router

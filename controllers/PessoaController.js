@@ -1,4 +1,6 @@
+import { Sequelize } from "sequelize";
 import Pessoa from "../models/Pessoa.js";
+import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
 import bcrypt from 'bcrypt'
 
@@ -74,7 +76,34 @@ class PessoaController{
             res.redirect('/')
         })
     }
-    
+
+    excluir = async (req, res) => {
+        const usuario = await Usuario.findByPk(req.user.id)
+
+        // Seta status 0 se for tecnico
+        if(usuario.tipo === 2){
+            Tecnico.update({status: 0}, {
+                where:{
+                    usuario_id: usuario.id
+                }
+            })
+        }
+
+        Usuario.update({status: 0}, {
+            where:{
+                id: usuario.id
+            }
+        })
+
+        Pessoa.update({status: 0}, {
+            where:{
+                id: usuario.pessoa_id
+            }
+        }).then(() => {
+            req.flash('success_msg', 'Cadastro excluído com sucesso.')
+            res.redirect('/usuario/login')
+        })
+    }
 }
 
 export default new PessoaController()
