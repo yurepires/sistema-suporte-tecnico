@@ -1,4 +1,4 @@
-import { where } from "sequelize";
+import { Op, Sequelize, where } from "sequelize";
 import Chamado from "../models/Chamado.js";
 import Feedback from "../models/Feedback.js";
 import Tecnico from "../models/Tecnico.js";
@@ -15,7 +15,10 @@ class FeedbackController {
         const chamados = await Chamado.findAll({
             where:{
                 status: 'Concluído',
-                cliente_id: req.user.id
+                cliente_id: req.user.id,
+                id: {
+                    [Op.notIn]: Sequelize.literal("(SELECT chamado_id FROM feedbacks)")
+                }
             }
         })
 
@@ -59,13 +62,17 @@ class FeedbackController {
             tecnico_id: req.body.tecnico_id
         }
 
-        console.log(feedback)
-
         await Feedback.create(feedback)
 
         const tecnico = await Tecnico.findByPk(feedback.tecnico_id)
-        console.log(feedback.tecnico_id)
-        Tecnico.update({avaliacao: (tecnico.avaliacao + feedback.nota) / (tecnico.qtdAtendimentos === 0 ? 1 : 2)}, {
+        console.log(tecnico.avaliacao)
+        console.log(feedback.nota)
+        console.log(tecnico.qtdAtendimentos)
+        console.log(Number(tecnico.avaliacao) + Number(feedback.nota))
+        console.log((tecnico.qtdAtendimentos === 1 ? 1 : 2))
+        console.log((Number(tecnico.avaliacao) + Number(feedback.nota)) / Number((tecnico.qtdAtendimentos === 1 ? 1 : 2)))
+        
+        Tecnico.update({avaliacao: (Number(tecnico.avaliacao) + Number(feedback.nota)) / Number((tecnico.qtdAtendimentos === 1 ? 1 : 2))}, {
             where:{
                 id: feedback.tecnico_id
             }

@@ -6,23 +6,23 @@ const localEstrategy = passportLocal.Strategy
 
 export default (passport) => {
     passport.use(new localEstrategy(
-        {usernameField: 'email', passwordField: 'senha'}, (username, password, done) => {
-            Usuario.findOne({
+        {usernameField: 'email', passwordField: 'senha'}, async (username, password, done) => {
+            const usuario = await Usuario.findOne({
                 where:{
                     email: username
                 }
-            }).then((usuario) => {
-                if (!usuario) {
-                    return done(null, false, {message: 'Usuário não encontrado.'})
-                }
-                const isMatch = bcrypt.compare(password, usuario.senha)
-
-                if (!isMatch) {
-                    return done(null, false, {message: 'Senha incorreta!'})
-                }
-
-                return done(null, usuario)
             })
+
+            if (!usuario) {
+                return done(null, false, {message: 'Usuário não encontrado.'})
+            }
+            const isMatch = await bcrypt.compare(password, usuario.senha)
+
+            if (!isMatch) {
+                return done(null, false, {message: 'Senha incorreta!'})
+            }
+
+            return done(null, usuario)
         }
     ))
 

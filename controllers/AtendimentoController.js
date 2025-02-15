@@ -79,6 +79,9 @@ class AtendimentoController {
                 id: atendimento.chamado_id
             }
         })
+
+        const tecnico = await Tecnico.findByPk(atendimento.tecnico_id)
+
         Tecnico.update({disponibilidade: 'Disponível', qtdAtendimentos: tecnico.qtdAtendimentos + 1}, {
             where:{
                 id: atendimento.tecnico_id
