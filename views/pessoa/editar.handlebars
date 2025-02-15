@@ -1,0 +1,39 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+    </nav>
+    <form action="/pessoa/editar" method="post">
+
+        <h2>{{dados.pessoa.id}}</h2>
+        <h2>{{pessoas.id}}</h2>
+        <h2>{{usuario.email}}</h2>
+
+        <fieldset>
+            <legend>Seus dados</legend>
+            <div>
+                <label for="id">ID</label>
+                <input type="number" name="id" id="id" value="{{pessoa.id}}" readonly>
+            </div>
+
+            <div>
+                <label for="nome">NOME</label>
+                <input type="text" value="{{pessoa.nome}}" name="nome" id="nome" required>
+            </div>
+
+            <div>
+                <label for="cpf">CPF</label>
+                <input type="text" value="{{pessoa.cpf}}" name="cpf" id="cpf" required>
+            </div>
+
+            <div>
+                <label for="telefone">TELEFONE</label>
+                <input type="text" value="{{pessoa.telefone}}" name="telefone" id="telefone" required>
+            </div>
+            <div>
+                <label for="email">EMAIL</label>
+                <input type="text" value="{{usuario.email}}" name="email" id="email" readonly>
+            </div>
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>

@@ -1,7 +1,6 @@
 import { Op, where } from "sequelize";
 import Atendimento from "../models/Atendimento.js";
 import Chamado from "../models/Chamado.js";
-import Pessoa from "../models/Pessoa.js";
 import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
 
@@ -19,7 +18,8 @@ class ChamadoController {
                 cliente_id: req.user.id,
                 [Op.or]:[
                     {status: 'Em andamento'},
-                    {status: 'Pendente'}
+                    {status: 'Pendente'},
+                    {status: 'Concluído'}
                 ]
             }
         })
@@ -28,6 +28,12 @@ class ChamadoController {
     }
 
     formCadastro = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para abrir um chamado')
+            return res.redirect('/usuario/login')
+        }
+
         if(req.user.tipo === 2){
             req.flash('error_msg', 'Técnicos não podem abrir chamados')
             return res.redirect('/')

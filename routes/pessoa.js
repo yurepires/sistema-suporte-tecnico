@@ -5,9 +5,11 @@ const router = express.Router()
 
 router.get('/', PessoaController.index)
 
-router.get('/cadastro', PessoaController.formularioCadastro)
-
+router.get('/cadastro', (req, res) => {res.render('pessoa/cadastro')})
 router.post('/cadastro', PessoaController.cadastrar)
+
+router.get('/editar', PessoaController.editar)
+router.post('/editar', PessoaController.salvar)
 
 
 export default router

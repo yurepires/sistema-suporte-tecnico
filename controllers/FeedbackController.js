@@ -12,6 +12,7 @@ class FeedbackController {
             return res.redirect('/usuario/login')
         }
 
+        // Pega todos os chamados que não tem feedback 
         const chamados = await Chamado.findAll({
             where:{
                 status: 'Concluído',
@@ -65,12 +66,6 @@ class FeedbackController {
         await Feedback.create(feedback)
 
         const tecnico = await Tecnico.findByPk(feedback.tecnico_id)
-        console.log(tecnico.avaliacao)
-        console.log(feedback.nota)
-        console.log(tecnico.qtdAtendimentos)
-        console.log(Number(tecnico.avaliacao) + Number(feedback.nota))
-        console.log((tecnico.qtdAtendimentos === 1 ? 1 : 2))
-        console.log((Number(tecnico.avaliacao) + Number(feedback.nota)) / Number((tecnico.qtdAtendimentos === 1 ? 1 : 2)))
         
         Tecnico.update({avaliacao: (Number(tecnico.avaliacao) + Number(feedback.nota)) / Number((tecnico.qtdAtendimentos === 1 ? 1 : 2))}, {
             where:{

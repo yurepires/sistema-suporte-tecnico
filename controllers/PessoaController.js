@@ -9,10 +9,6 @@ class PessoaController{
         res.render('pessoa/index', {pessoas: pessoas})
     }
 
-    formularioCadastro = (req, res) => {
-        res.render('pessoa/cadastro')
-    }
-
     cadastrar = async (req, res) => {
         const pessoa = await Pessoa.findOne({
             where:{
@@ -51,6 +47,34 @@ class PessoaController{
         })
     }
 
+    editar = async (req, res) => {
+        const usuario = await Usuario.findByPk(req.user.id)
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Você deve estar logado para editar seus dados')
+        }
+
+        const pessoa = await Pessoa.findByPk(usuario.pessoa_id)
+
+        res.render('pessoa/editar', {pessoa: pessoa, usuario: usuario})
+    }
+
+    salvar = async (req, res) => {
+
+        Pessoa.update({
+            nome: req.body.nome,
+            cpf: req.body.cpf,
+            telefone: req.body.telefone,
+        }, {
+            where:{
+                id: req.body.id
+            }
+        }).then(() => {
+            req.flash('success_msg', 'Dados editados com sucesso!')
+            res.redirect('/')
+        })
+    }
+    
 }
 
 export default new PessoaController()
