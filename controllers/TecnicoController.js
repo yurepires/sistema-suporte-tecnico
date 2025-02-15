@@ -90,7 +90,7 @@ class TecnicoController {
             res.redirect('/usuario/login')
         }
 
-        if(req.user.tipo !== 2){
+        if(req.user.tipo === 2 || req.user.tipo === 1){
             req.flash('error_msg', 'Você precisa ser técnico para acessar esta página')
             res.redirect('/')
         }

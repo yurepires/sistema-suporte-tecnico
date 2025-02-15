@@ -1,0 +1,20 @@
+<table>
+    <tr>
+        <th>NOME</th>
+        <th>CPF</th>
+        <th>TELEFONE</th>
+        <th>STATUS</th>
+    </tr>
+    {{#each pessoas}}
+        <tr>
+            <td>{{nome}}</td>
+            <td>{{cpf}}</td>
+            <td>{{telefone}}</td>
+            <td>{{status}}</td>
+            <td>
+                <button onclick="adminExcluirPessoa({{id}})">Excluir</button>
+                <a href="/pessoa/editar"></a>
+            </td>
+        </tr>
+    {{/each}}
+</table>

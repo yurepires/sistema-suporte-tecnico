@@ -71,6 +71,9 @@ app.use('/tecnico', tecnico)
 import feedback from './routes/feedback.js'
 app.use('/feedback', feedback)
 
+import admin from './routes/admin.js'
+app.use('/admin', admin)
+
 app.listen(port, () => {
     console.log("Servidor rodando em http://localhost:"+port)
 })

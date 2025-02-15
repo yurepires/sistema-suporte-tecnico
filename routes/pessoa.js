@@ -13,5 +13,8 @@ router.post('/editar', PessoaController.salvar)
 
 router.get('/excluir', PessoaController.excluir)
 
+// rota para o admin
+router.get('/excluir/:id', PessoaController.excluir)
+
 
 export default router

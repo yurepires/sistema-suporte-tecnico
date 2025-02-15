@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, where } from "sequelize";
 import Pessoa from "../models/Pessoa.js";
 import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
@@ -79,7 +79,29 @@ class PessoaController{
     }
 
     excluir = async (req, res) => {
-        const usuario = await Usuario.findByPk(req.user.id)
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para excluir cadastro.')
+            res.redirect('/usuario/login')
+        }
+
+        let usuario = {}
+        // Verifica se foi passado params e que tipo de usuario passou
+        if(req.params.id !== undefined){
+            if(req.user.tipo === 1){
+                let pessoa = await Pessoa.findByPk(req.params.id) // o id passado na pagina admin/pessoas é de pessoa
+                usuario = await Usuario.findOne({
+                    where:{
+                        pessoa_id: pessoa.id
+                    }
+                })
+            } else {
+                req.flash('error_msg', 'Apenas administradores podem excluir outros cadastros!')
+                return res.redirect('/')
+            }
+        } else {
+            usuario = await Usuario.findByPk(req.user.id)
+        }
 
         // Seta status 0 se for tecnico
         if(usuario.tipo === 2){
@@ -102,7 +124,11 @@ class PessoaController{
             }
         }).then(() => {
             req.flash('success_msg', 'Cadastro excluído com sucesso.')
-            res.redirect('/usuario/login')
+            if(req.user.tipo === 1){
+                res.redirect('/admin/pessoas')
+            } else {
+                res.redirect('/usuario/login')
+            }
         })
     }
 }

@@ -16,6 +16,12 @@ function excluirPessoa(){
     }
 }
 
+function adminExcluirPessoa(id){
+    if(confirm('Tem certeza que deseja excluir este cadastro?')){
+        window.location.href='/pessoa/excluir/'+id;
+    }
+}
+
 function excluirFeedback(id){
     if(confirm('Tem certeza que deseja excluir esse feedback?')){
         window.location.href='/feedback/excluir/'+id;
