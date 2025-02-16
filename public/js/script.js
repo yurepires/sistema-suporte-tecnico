@@ -33,3 +33,9 @@ function excluirFeedback(id){
         window.location.href='/feedback/excluir/'+id;
     }
 }
+
+function adminExcluirTecnico(id){
+    if(confirm('Tem certeza que deseja excluir esse técnico?')){
+        window.location.href='/tecnico/excluir/'+id;
+    }
+}

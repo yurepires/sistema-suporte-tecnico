@@ -1,0 +1,30 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+        <a href="/tecnico/cadastro">Novo</a>
+    </nav>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>DISPONIBILIDADE</th>
+            <th>AVALIAÇÃO</th>
+            <th>STATUS</th>
+            <th>USUARIO_ID</th>
+        </tr>
+        {{#each tecnicos}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{nome}}</td>
+                <td>{{disponibilidade}}</td>
+                <td>{{avaliacao}}</td>
+                <td>{{status}}</td>
+                <td>{{usuario_id}}</td>
+                <td>
+                    <button onclick="adminExcluirTecnico({{id}})">Excluir</button>
+                    <a href="/tecnico/editar/{{id}}">Editar</a>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>

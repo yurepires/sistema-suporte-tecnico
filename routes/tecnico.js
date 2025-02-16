@@ -11,4 +11,8 @@ router.post('/cadastro', TecnicoController.cadastrar)
 router.get('/editar', TecnicoController.editar)
 router.post('/editar', TecnicoController.salvar)
 
+//rota admin
+router.get('/editar/:id', TecnicoController.editar)
+router.get('/excluir/:id', TecnicoController.excluir)
+
 export default router

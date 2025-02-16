@@ -9,4 +9,6 @@ router.get('/usuarios', AdminController.listarUsuarios)
 
 router.get('/chamados', AdminController.listarChamados)
 
+router.get('/tecnicos', AdminController.listarTecnicos)
+
 export default router

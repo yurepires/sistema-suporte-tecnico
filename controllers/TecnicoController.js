@@ -2,6 +2,7 @@ import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
 import Pessoa from "../models/Pessoa.js";
 import bcrypt from "bcrypt"
+import { where } from "sequelize";
 
 class TecnicoController {
 
@@ -90,16 +91,27 @@ class TecnicoController {
             res.redirect('/usuario/login')
         }
 
-        if(req.user.tipo === 2 || req.user.tipo === 1){
-            req.flash('error_msg', 'Você precisa ser técnico para acessar esta página')
+        if(req.user.tipo === 0){
+            req.flash('error_msg', 'Você precisa ser técnico ou admin para acessar esta página')
             res.redirect('/')
         }
 
-        const tecnico = await Tecnico.findOne({
-            where:{
-                usuario_id: req.user.id
+        let tecnico = {}
+        if(req.params.id !== undefined){
+            if(req.user.tipo === 1){
+                tecnico = await Tecnico.findByPk(req.params.id)
+                return res.render('tecnico/editar', {tecnico: tecnico})
+            } else {
+                req.flash('error_msg', 'Apenas administradores podem editar outros técnicos!')
+                return res.redirect('/')
             }
-        })
+        } else {
+            tecnico = await Tecnico.findOne({
+                where:{
+                    usuario_id: req.user.id
+                }
+            })
+        }
 
         res.render('tecnico/editar', {tecnico: tecnico})
     }
@@ -119,6 +131,44 @@ class TecnicoController {
             req.flash('success_msg', 'Técnico editado com sucesso.')
             res.redirect('/')
         })
+    }
+
+    excluir = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para excluir um funcionário!')
+            return res.redirect('/usuario/login')
+        }
+
+        if(req.user.tipo !== 1){
+            req.flash('error_msg', 'Apenas admins podem excluir outros funcionários.')
+            return res.redirect('/')
+        }
+
+        const tecnico = await Tecnico.findByPk(req.params.id)
+
+        const usuario = await Usuario.findByPk(tecnico.usuario_id)
+
+        Tecnico.update({status: 0}, {
+            where:{
+                id: tecnico.id
+            }
+        })
+
+        Usuario.update({status: 0}, {
+            where:{
+                id: usuario.id
+            }
+        })
+
+        Pessoa.update({status: 0}, {
+            where:{
+                id: usuario.pessoa_id
+            }
+        })
+
+        req.flash('success_msg', 'Funcionário excluído com sucesso!')
+        res.redirect('/admin/tecnicos')
     }
 }
 

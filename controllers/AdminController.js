@@ -65,6 +65,12 @@ class AdminController {
 
         res.render('admin/chamados', {infos: infos})
     }
+
+    listarTecnicos = async (req, res) => {
+        const tecnicos = await Tecnico.findAll()
+
+        res.render('admin/tecnicos', {tecnicos: tecnicos})
+    }
 }
 
 export default new AdminController()
