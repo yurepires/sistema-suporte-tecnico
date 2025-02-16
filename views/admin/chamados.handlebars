@@ -1,0 +1,29 @@
+<div>
+    <nav>
+        <a href="/">Voltar</a>
+        <a href="/chamados/cadastro">Novo</a>
+    </nav>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>TÍTULO</th>
+            <th>DESCRIÇÃO</th>
+            <th>STATUS</th>
+            <th>CLIENTE</th>
+            <th>TÉCNICO</th>
+        </tr>
+        {{#each infos}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{titulo}}</td>
+                <td>{{descricao}}</td>
+                <td>{{status}}</td>
+                <td>{{cliente.email}}</td>
+                <td>{{tecnico.nome}}</td>
+                <td>
+                    <a href="/chamados/editar/{{id}}">Editar</a>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>

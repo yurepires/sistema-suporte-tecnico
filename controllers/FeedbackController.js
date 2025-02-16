@@ -35,8 +35,8 @@ class FeedbackController {
                 titulo: chamado.titulo,
                 descricao: chamado.descricao,
                 tecnico: tecnicos.find(tecnico => tecnico.id === chamado.tecnico_id) || { nome: 'Técnico não existe ou foi excluído.' }
-            };
-        });
+            }
+        })
 
         res.render('feedback/index', {infos: infos})
     }

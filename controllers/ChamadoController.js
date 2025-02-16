@@ -64,6 +64,11 @@ class ChamadoController {
     editar = async (req, res) => {
         const chamado = await Chamado.findByPk(req.params.id)
 
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para editar chamado!')
+            res.redirect('/usuario/login')
+        }
+
         if(!chamado){
             req.flash('error_msg', 'Chamado não encontrado.')
             return res.redirect('/chamados/meuschamados')
@@ -81,6 +86,11 @@ class ChamadoController {
             }
         }).then(() => {
             req.flash('success_msg', 'Chamado modificado com sucesso!')
+            if(req.user !== undefined){
+                if(req.user.tipo === 1){
+                    return res.redirect('/admin/chamados')
+                }
+            }
             res.redirect('/chamados/meuschamados')
         })
     }

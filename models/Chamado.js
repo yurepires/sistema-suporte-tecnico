@@ -1,5 +1,5 @@
 import banco from "../config/banco.js";
-import Usuario from "./Pessoa.js";
+import Usuario from "./Usuario.js";
 import Tecnico from "./Tecnico.js";
 
 
