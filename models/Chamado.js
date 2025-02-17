@@ -1,6 +1,6 @@
 import banco from "../config/banco.js";
+import Atendimento from "./Atendimento.js";
 import Usuario from "./Usuario.js";
-import Tecnico from "./Tecnico.js";
 
 
 const Chamado = banco.sequelize.define('chamados', {

@@ -12,6 +12,16 @@ class FeedbackController {
             req.flash('error_msg', 'Faça login para realizar um feedback')
             return res.redirect('/usuario/login')
         }
+        
+        // Pega todos os atendimentos que não tem feedback 
+        const atendimentos = await Atendimento.findAll({
+            where:{
+                status: 'Concluído',
+                id: {
+                    [Op.notIn]: Sequelize.literal("(SELECT atendimento_id FROM feedbacks)")
+                }
+            }
+        })
 
         const chamados = await Chamado.findAll({
             where:{
@@ -22,26 +32,25 @@ class FeedbackController {
 
         const tecnicos = await Tecnico.findAll()
 
-        // Pega todos os atendimentos que não tem feedback 
-        const atendimento = await Atendimento.findAll({
-            where:{
-                status: 'Concluído',
-                id: {
-                    [Op.notIn]: Sequelize.literal("(SELECT atendimento_id FROM feedbacks)")
+        let infos = chamados.map(chamado => {
+            if(chamado.cliente_id === req.user.id){
+                return {
+                    atendimento: atendimentos.find(atendimento => atendimento.chamado_id === chamado.id),
+                    chamado: chamado,
                 }
+            }
+        }).filter(info => info && info.atendimento)
+
+        infos = infos.map(info => {
+            return {
+                id: info.atendimento.id,
+                titulo: info.chamado.titulo,
+                descricao: info.chamado.descricao,
+                tecnico: tecnicos.find(tecnico => tecnico.id === info.atendimento.tecnico_id)
             }
         })
 
-        // Pega os chamados que foram atendidos de um usuario
-        let chamadosAtendidosUsuario = atendimento.map(atendimento => {
-            return {
-                id: atendimento.id,
-                chamado: chamados.find(chamado => chamado.id === atendimento.chamado_id),
-                tecnico: tecnicos.find(tecnico => tecnico.id === atendimento.tecnico_id)
-            }
-        }) 
-
-        res.render('feedback/index', {infos: chamadosAtendidosUsuario})
+        res.render('feedback/index', {infos: infos})
     }
 
     meusFeedbacks = async (req, res) => {
