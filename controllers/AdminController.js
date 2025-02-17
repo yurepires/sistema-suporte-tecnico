@@ -3,6 +3,7 @@ import Pessoa from "../models/Pessoa.js";
 import Usuario from "../models/Usuario.js";
 import Tecnico from "../models/Tecnico.js";
 import Chamado from "../models/Chamado.js";
+import Atendimento from "../models/Atendimento.js";
 
 class AdminController {
     listarPessoas = async (req, res) => {
@@ -70,6 +71,11 @@ class AdminController {
         const tecnicos = await Tecnico.findAll()
 
         res.render('admin/tecnicos', {tecnicos: tecnicos})
+    }
+
+    listarAtendimentos = async (req, res) => {
+        const atendimentos = await Atendimento.findAll()
+        
     }
 }
 

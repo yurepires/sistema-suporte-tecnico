@@ -12,7 +12,8 @@ class AtendimentoController {
         })
         const atendimento = await Atendimento.findOne({
             where:{
-                status: "Em andamento"
+                status: "Em andamento",
+                tecnico_id: req.user.id
             }
         })
         res.render('atendimentos/cadastro', {chamados: chamados, atendimento: atendimento})
@@ -59,8 +60,7 @@ class AtendimentoController {
                 }
             )
 
-            Chamado.update(
-                {status: 'Em andamento', tecnico_id: novoAtendimento.tecnico_id},{
+            Chamado.update({status: 'Em andamento'}, {
                 where:{
                     id: novoAtendimento.chamado_id,
                 }
@@ -107,7 +107,7 @@ class AtendimentoController {
             return res.redirect('/atendimentos/pendentes')
         }
 
-        Chamado.update({tecnico_id: null}, {
+        Chamado.update({status: 'Pendente'}, {
             where:{
                 id: atendimento.chamado_id
             }

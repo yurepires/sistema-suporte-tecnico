@@ -2,6 +2,7 @@ import { Op, Sequelize, where } from "sequelize";
 import Chamado from "../models/Chamado.js";
 import Feedback from "../models/Feedback.js";
 import Tecnico from "../models/Tecnico.js";
+import Atendimento from "../models/Atendimento.js";
 
 class FeedbackController {
 
@@ -12,14 +13,10 @@ class FeedbackController {
             return res.redirect('/usuario/login')
         }
 
-        // Pega todos os chamados que não tem feedback 
         const chamados = await Chamado.findAll({
             where:{
                 status: 'Concluído',
                 cliente_id: req.user.id,
-                id: {
-                    [Op.notIn]: Sequelize.literal("(SELECT chamado_id FROM feedbacks)")
-                }
             }
         })
 
@@ -29,16 +26,26 @@ class FeedbackController {
             }
         })
 
-        const infos = chamados.map(chamado => {
-            return {
-                id: chamado.id,
-                titulo: chamado.titulo,
-                descricao: chamado.descricao,
-                tecnico: tecnicos.find(tecnico => tecnico.id === chamado.tecnico_id) || { nome: 'Técnico não existe ou foi excluído.' }
+        // Pega todos os atendimentos que não tem feedback 
+        const atendimento = await Atendimento.findAll({
+            where:{
+                status: 'Concluído',
+                id: {
+                    [Op.notIn]: Sequelize.literal("(SELECT atendimento_id FROM feedbacks)")
+                }
             }
         })
 
-        res.render('feedback/index', {infos: infos})
+        // Pega os chamados que foram atendidos de um usuario
+        let chamadosAtendidosUsuario = atendimento.map(atendimento => {
+            return {
+                id: atendimento.id,
+                chamado: chamados.find(chamado => chamado.id === atendimento.chamado_id),
+                tecnico: tecnicos.find(tecnico => tecnico.id === atendimento.tecnico_id)
+            }
+        }) 
+
+        res.render('feedback/index', {infos: chamadosAtendidosUsuario})
     }
 
     meusFeedbacks = async (req, res) => {
@@ -63,7 +70,7 @@ class FeedbackController {
             descricao: req.body.descricao,
             nota: req.body.nota,
             cliente_id: req.user.id,
-            chamado_id: req.body.chamado_id,
+            atendimento_id: req.body.atendimento_id,
             tecnico_id: req.body.tecnico_id
         }
 

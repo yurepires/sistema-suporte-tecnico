@@ -26,12 +26,6 @@ Chamado.belongsTo(Usuario, {
     as: 'cliente'
 })
 
-Chamado.belongsTo(Tecnico, {
-    foreignKey: 'tecnico_id',
-    constraint: true,
-    as: 'tecnico'
-})
-
 // Chamado.sync()
 
 export default Chamado

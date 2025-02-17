@@ -1,7 +1,7 @@
 import banco from "../config/banco.js";
+import Atendimento from "./Atendimento.js";
 import Tecnico from "./Tecnico.js";
 import Usuario from "./Usuario.js";
-import Chamado from "./Chamado.js";
 
 const Feedback = banco.sequelize.define('feedbacks', {
     id:{
@@ -26,11 +26,11 @@ Feedback.belongsTo(Usuario, {
     as: 'usuario'
 })
 
-Feedback.belongsTo(Chamado, {
-    foreignKey: 'chamado_id',
+Feedback.belongsTo(Atendimento, {
+    foreignKey: 'atendimento_id',
     constraint: true,
     onDelete: 'CASCADE',
-    as: 'chamado'
+    as: 'atendimento'
 })
 
 Feedback.belongsTo(Tecnico, {

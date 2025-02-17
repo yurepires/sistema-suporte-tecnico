@@ -1,16 +1,17 @@
 <div>
     {{#each infos}}
         <div>
-            <h2>{{titulo}}</h2>
-            <p>{{descricao}}</p>
+            <h2>{{chamado.titulo}}</h2>
+            <p>{{chamado.descricao}}</p>
             <h3>{{tecnico.nome}}</h3>
             <form action="/feedback/novo" method="post">
+                <label>Título</label>
                 <input type="text" placeholder="Título do Feedback" name="titulo">
                 <label>Nota:</label>
                 <input type="number" name="nota" placeholder="0 a 5">
                 <label>Descrição:</label>
                 <input type="text" name="descricao">
-                <input type="hidden" name="chamado_id" value="{{id}}">
+                <input type="hidden" name="atendimento_id" value="{{id}}">
                 <input type="hidden" name="tecnico_id" value="{{tecnico.id}}">
                 <button type="submit">Dar Feedback</button>
             </form>
