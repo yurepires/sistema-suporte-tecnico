@@ -10,13 +10,8 @@ class AtendimentoController {
                 status: "Pendente"
             }
         })
-        const atendimento = await Atendimento.findOne({
-            where:{
-                status: "Em andamento",
-                tecnico_id: req.user.id
-            }
-        })
-        res.render('atendimentos/cadastro', {chamados: chamados, atendimento: atendimento})
+
+        res.render('atendimentos/index', {chamados: chamados})
     }
 
     cadastrar = async (req, res) => {
@@ -29,23 +24,22 @@ class AtendimentoController {
 
         if(tecnico.disponibilidade === 'Ocupado'){
             req.flash('error_msg', 'Você já está fazendo um atendimento!')
-            return res.redirect('/atendimentos/pendentes')
+            return res.redirect('/atendimentos')
         }
 
         const chamado = await Chamado.findByPk(req.body.chamado_id)
 
         if(!chamado){
             req.flash('error_msg', 'Chamado não encontrado.')
-            return res.redirect('/atendimentos/pendentes')
+            return res.redirect('/atendimentos')
         }
 
         if(chamado.status === 'Em andamento'){
             req.flash('error_msg', 'Este chamado já está em andamento.')
-            return res.redirect('/atendimentos/pendentes')
+            return res.redirect('/atendimentos')
         }
 
         const novoAtendimento = {
-            resumo: "",
             status: "Em andamento",
             chamado_id: chamado.id,
             tecnico_id: tecnico.id
@@ -66,8 +60,48 @@ class AtendimentoController {
                 }
             })
             req.flash('success_msg', 'Atendimento iniciado com sucesso!')
-            return res.redirect('/')
+            return res.redirect('/atendimentos/em-andamento')
         })
+    }
+
+    atendimentoEmAndamento = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login primeiro.')
+            return res.redirect('/usuario/login')
+        }
+
+        const tecnico = await Tecnico.findOne({
+            where:{
+                usuario_id: req.user.id
+            }
+        })
+
+        let atendimento = await Atendimento.findOne({
+            where:{
+                status: "Em andamento",
+                tecnico_id: tecnico.id
+            }
+        })
+
+        if(atendimento === null){
+            req.flash('error_msg', 'Você não tem atendimentos em andamento.')
+            return res.redirect('/atendimentos')
+        }
+
+        const chamado = await Chamado.findByPk(atendimento.chamado_id)
+
+        const infos = {
+            id: atendimento.id,
+            titulo: chamado.titulo,
+            descricao: chamado.descricao
+        }
+
+        console.log(infos)
+
+        //ache uma forma de mandar o atendimento com dados do chamado para a view
+
+        res.render('atendimentos/emAndamento', {infos: infos})
     }
 
     concluir = async (req, res) => {
@@ -94,7 +128,61 @@ class AtendimentoController {
             }
         }).then(() => {
             req.flash('success_msg', 'Atendimento concluido!')
-            return res.redirect('/atendimentos/pendentes')
+            return res.redirect('/atendimentos/concluidos')
+        })
+    }
+
+    atendimentosConcluidos = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login primeiro.')
+            return res.redirect('/usuario/login')
+        }
+
+        const tecnico = await Tecnico.findOne({
+            where:{
+                usuario_id: req.user.id
+            }
+        })
+
+        const atendimentos = await Atendimento.findAll({
+            where:{
+                status: 'Concluído',
+                tecnico_id: tecnico.id
+            }
+        })
+
+        res.render('atendimentos/concluidos', {atendimentos: atendimentos})
+    }
+
+    editar = async (req, res) => {
+
+        if(req.user === undefined){
+            req.flash('error_msg', 'Faça login para editar um atendimento.')
+            return res.redirect('/usuario/login')
+        }
+
+        if(req.user.tipo !== 2){
+            req.flash('error_msg', 'Apenas técnicos podem editar atendimentos.')
+            return res.redirect('/')
+        }
+
+        const atendimento = await Atendimento.findByPk(req.params.id)
+
+        res.render('atendimentos/editar', {atendimento: atendimento})
+    }
+
+    salvar = async (req, res) => {
+        Atendimento.update({resumo: req.body.resumo}, {
+            where:{
+                id: req.body.id
+            }
+        }).then(() => {
+            req.flash('success_msg', 'Atendimento editado com sucesso.')
+            if(req.user.tipo === 1){
+                return res.redirect('/admin/atendimentos')
+            }
+            res.redirect('/atendimentos/concluidos')
         })
     }
 
@@ -106,6 +194,12 @@ class AtendimentoController {
             req.flash('error_msg', 'Atendimento não encontrado!')
             return res.redirect('/atendimentos/pendentes')
         }
+
+        Tecnico.update({disponibilidade: 'Disponível'}, {
+            where:{
+                id: atendimento.tecnico_id
+            }
+        })
 
         Chamado.update({status: 'Pendente'}, {
             where:{
@@ -119,7 +213,7 @@ class AtendimentoController {
             }
         }).then(() => {
             req.flash('success_msg', 'Atendimento cancelado.')
-            return res.redirect('/atendimentos/pendentes')
+            return res.redirect('/atendimentos')
         })
     }
 }

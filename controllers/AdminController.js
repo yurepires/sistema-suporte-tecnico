@@ -76,6 +76,7 @@ class AdminController {
     listarAtendimentos = async (req, res) => {
         const atendimentos = await Atendimento.findAll()
         
+        res.render('admin/atendimentos', {atendimentos: atendimentos})
     }
 }
 

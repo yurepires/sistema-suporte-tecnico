@@ -1,0 +1,26 @@
+<div>
+    <nav>
+        <a href="/atendimentos/concluidos">Voltar</a>
+    </nav>
+    <form action="/atendimentos/editar" method="post">
+        <fieldset>
+            <legend>Dados do atendimento</legend>
+
+            <div>
+                <label for="id">ID</label>
+                <input type="number" name="id" id="id" value="{{atendimento.id}}" readonly>
+            </div>
+
+            <div>
+                <label for="resumo">RESUMO</label>
+                <input type="text" value="{{atendimento.resumo}}" name="resumo" id="resumo" required>
+            </div>
+
+            <div>
+                <label for="chamado_id">CHAMADO_ID</label>
+                <input type="text" value="{{atendimento.chamado_id}}" name="chamado_id" id="chamado_id" readonly>
+            </div>
+            <button type="submit">SALVAR</button>
+        </fieldset>
+    </form>
+</div>

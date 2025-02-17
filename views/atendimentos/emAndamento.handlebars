@@ -1,0 +1,15 @@
+<div>
+    <nav>
+        <a href="/atendimentos">Voltar</a>
+    </nav>
+    <div>
+        <h2>{{infos.titulo}}</h2>
+        <h3>{{infos.descricao}}</p>
+        <form action="/atendimentos/concluir" method="post">
+            <label>RESUMO</label>
+            <input type="text" name="resumo" required>
+            <button type="submit" name="id" value="{{infos.id}}">Concluir</button>
+        </form>
+        <button type="submit" onclick="excluirAtendimento({{infos.id}})">Excluir</button>
+    </div>
+</div>

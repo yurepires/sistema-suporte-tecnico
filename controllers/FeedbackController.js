@@ -20,11 +20,7 @@ class FeedbackController {
             }
         })
 
-        const tecnicos = await Tecnico.findAll({
-            where:{
-                status: 1
-            }
-        })
+        const tecnicos = await Tecnico.findAll()
 
         // Pega todos os atendimentos que não tem feedback 
         const atendimento = await Atendimento.findAll({

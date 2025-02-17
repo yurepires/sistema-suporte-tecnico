@@ -1,0 +1,14 @@
+<div>
+    <h2>Chamados pendentes</h2>
+    <a href="/">Voltar</a>
+    <a href="/atendimentos/em-andamento">Atendimento em andamento</a>
+    <a href="/atendimentos/concluidos">Atendimentos concluídos</a>
+    {{#each chamados}}
+        <form action="/atendimentos/cadastro" method="post">
+            <h2>{{titulo}}</h2>
+            <p>{{descricao}}</p>
+            <p>{{status}}</p>
+            <button type="submit" name="chamado_id" value="{{id}}">Atender</button>
+        </form>
+    {{/each}}
+</div>

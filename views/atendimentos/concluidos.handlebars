@@ -1,22 +1,21 @@
 <div>
     <nav>
-        <a href="/">Voltar</a>
+        <a href="/atendimentos">Voltar</a>
     </nav>
     <table>
         <tr>
             <th>ID</th>
             <th>RESUMO</th>
-            <th>STATUS</th>
             <th>CHAMADO_ID</th>
-            <th>TECNICO_ID</th>
         </tr>
         {{#each atendimentos}}
             <tr>
                 <td>{{id}}</td>
                 <td>{{resumo}}</td>
-                <td>{{status}}</td>
                 <td>{{chamado_id}}</td>
-                <td>{{tecnico_id}}</td>
+                <td>
+                    <a href="/atendimentos/editar/{{id}}">editar</a>
+                </td>
             </tr>
         {{/each}}
     </table>
