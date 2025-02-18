@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 
 import { logado } from './config/rules.js'
 
-app.get('/', logado,(req, res) => {
+app.get('/', logado, (req, res) => {
     if(req.user.tipo === 1){
         res.render('admin/index')
     } else if (req.user.tipo === 0) {

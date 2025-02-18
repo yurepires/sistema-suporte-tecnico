@@ -15,7 +15,7 @@ const Usuario = banco.sequelize.define('usuarios', {
         type: banco.Sequelize.STRING(150)
     },
     tipo:{
-        type: banco.Sequelize.STRING(20)
+        type: banco.Sequelize.INTEGER
     },
     status:{
         type: banco.Sequelize.INTEGER

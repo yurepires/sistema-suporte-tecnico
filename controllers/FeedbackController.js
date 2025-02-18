@@ -49,13 +49,22 @@ class FeedbackController {
     }
 
     meusFeedbacks = async (req, res) => {
-        const feedbacks = await Feedback.findAll({
+        let feedbacks = await Feedback.findAll({
             where:{
                 cliente_id: req.user.id
             }
         })
 
-        res.render('feedback/meusfeedbacks', {feedbacks: feedbacks})
+        const tecnicos = await Tecnico.findAll()
+
+        feedbacks = feedbacks.map(feedback => {
+            return {
+                feedback: feedback,
+                tecnico: tecnicos.find(tecnico => tecnico.id === feedback.tecnico_id)
+            }
+        })
+
+        res.render('feedback/meusfeedbacks', {infos: feedbacks})
     }
     
     novoFeedback = async (req, res) => {
