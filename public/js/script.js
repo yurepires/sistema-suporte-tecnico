@@ -5,9 +5,7 @@ function excluirAtendimento(id){
 }
 
 function excluirChamado(id){
-    if(confirm('Tem certeza que deseja excluir este chamado?')){
-        window.location.href='/chamados/excluir/'+id;
-    }
+    window.location.href='/chamados/excluir/'+id;
 }
 
 function excluirPessoa(){
@@ -17,21 +15,15 @@ function excluirPessoa(){
 }
 
 function adminExcluirPessoa(id){
-    if(confirm('Tem certeza que deseja excluir este cadastro?')){
-        window.location.href='/pessoa/excluir/'+id;
-    }
+    window.location.href='/pessoa/excluir/'+id;
 }
 
 function adminExcluirUsuario(id){
-    if(confirm('Tem certeza que deseja excluir este usuario?')){
-        window.location.href='/usuario/excluir/'+id;
-    }
+    window.location.href='/usuario/excluir/'+id;
 }
 
 function excluirFeedback(id){
-    if(confirm('Tem certeza que deseja excluir esse feedback?')){
-        window.location.href='/feedback/excluir/'+id;
-    }
+    window.location.href='/feedback/excluir/'+id;
 }
 
 function adminExcluirTecnico(id){

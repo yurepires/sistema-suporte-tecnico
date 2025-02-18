@@ -1,10 +1,41 @@
-<h1>Bem vindo</h1>
-<a href="/admin/pessoas" style="padding-right: 10px;">Pessoas</a>
-<a href="/admin/usuarios" style="padding-right: 10px;">Usuarios</a>
-<a href="/admin/chamados" style="padding-right: 10px;">Chamados</a>
-<a href="/admin/atendimentos" style="padding-right: 10px;">Atendimentos</a>
-<a href="/admin/feedbacks" style="padding-right: 10px;">Feedbacks</a>
-<a href="/admin/tecnicos">Tecnicos</a>
-<a href="/feedback">Feedbcak</a>
-<h2>{{usuario.id}}</h2>
-<h3>{{usuario.email}}</h3>
+<div class="dashboard-content mt-3">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Bem-vindo ao Painel Administrativo</h5>
+            <p class="card-text">Selecione uma opção no menu abaixo para começar.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="content-wrapper">
+        <div class="nav-container mb-4">
+            <nav class="nav-menu">
+                <a class="nav-item" href="/admin/pessoas">
+                    <i class="bi bi-people"></i>
+                    <span>Pessoas</span>
+                </a>
+                <a class="nav-item" href="/admin/usuarios">
+                    <i class="bi bi-person"></i>
+                    <span>Usuários</span>
+                </a>
+                <a class="nav-item" href="/admin/tecnicos">
+                    <i class="bi bi-tools"></i>
+                    <span>Técnicos</span>
+                </a>
+                <a class="nav-item" href="/admin/chamados">
+                    <i class="bi bi-ticket"></i>
+                    <span>Chamados</span>
+                </a>
+                <a class="nav-item" href="/admin/atendimentos">
+                    <i class="bi bi-headset"></i>
+                    <span>Atendimentos</span>
+                </a>
+                <a class="nav-item" href="/admin/feedbacks">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Feedbacks</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>

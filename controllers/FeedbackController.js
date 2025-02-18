@@ -7,11 +7,6 @@ import Atendimento from "../models/Atendimento.js";
 class FeedbackController {
 
     chamadosConcluidos = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para realizar um feedback')
-            return res.redirect('/usuario/login')
-        }
         
         // Pega todos os atendimentos que não tem feedback 
         const atendimentos = await Atendimento.findAll({
@@ -65,11 +60,6 @@ class FeedbackController {
     
     novoFeedback = async (req, res) => {
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para realizar um feedback')
-            return res.redirect('/usuario/login')
-        }
-
         const feedback = {
             titulo: req.body.titulo,
             descricao: req.body.descricao,
@@ -93,11 +83,6 @@ class FeedbackController {
     }
 
     editar = async (req, res) => {
-        
-        if(req.user === undefined){
-            req.flash('error_msg', 'Você deve estar logado para editar seus feedbacks')
-            return res.redirect('/usuario/login')
-        }
 
         const feedback = await Feedback.findOne({
             where:{
@@ -162,6 +147,9 @@ class FeedbackController {
             }
         })
         req.flash('sucess_msg', 'Feedback excluído!')
+        if(req.user.tipo === 1){
+            return res.redirect('/admin/feedbacks')
+        }
         res.redirect('/feedback/meusfeedbacks')
     }
 }

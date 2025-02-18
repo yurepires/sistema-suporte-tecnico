@@ -1,18 +1,19 @@
 import express from 'express'
 import FeedbackController from '../controllers/FeedbackController.js'
+import { usuarioLogado } from '../config/rules.js'
 
 const router = express.Router()
 
-router.get('/', FeedbackController.chamadosConcluidos)
+router.get('/', usuarioLogado, FeedbackController.chamadosConcluidos)
 
-router.post('/novo', FeedbackController.novoFeedback)
+router.post('/novo', usuarioLogado, FeedbackController.novoFeedback)
 
-router.get('/meusfeedbacks', FeedbackController.meusFeedbacks)
+router.get('/meusfeedbacks', usuarioLogado, FeedbackController.meusFeedbacks)
 
-router.get('/editar/:id', FeedbackController.editar)
+router.get('/editar/:id', usuarioLogado, FeedbackController.editar)
 
-router.post('/editar', FeedbackController.salvar)
+router.post('/editar', usuarioLogado, FeedbackController.salvar)
 
-router.get('/excluir/:id', FeedbackController.excluir)
+router.get('/excluir/:id', usuarioLogado, FeedbackController.excluir)
 
 export default router

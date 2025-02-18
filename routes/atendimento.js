@@ -1,19 +1,20 @@
 import express from 'express'
 import AtendimentoController from '../controllers/AtendimentoController.js'
+import { tecnicoLogado, adminLogado } from '../config/rules.js'
 
 const router = express.Router()
 
-router.get('/', AtendimentoController.chamadosPendentes)
-router.post('/cadastro', AtendimentoController.cadastrar)
+router.get('/', tecnicoLogado, AtendimentoController.chamadosPendentes)
+router.post('/cadastro', tecnicoLogado, AtendimentoController.cadastrar)
 
-router.get('/em-andamento', AtendimentoController.atendimentoEmAndamento)
-router.post('/concluir', AtendimentoController.concluir)
+router.get('/em-andamento', tecnicoLogado, AtendimentoController.atendimentoEmAndamento)
+router.post('/concluir', tecnicoLogado, AtendimentoController.concluir)
 
-router.get('/concluidos', AtendimentoController.atendimentosConcluidos)
+router.get('/concluidos', tecnicoLogado, AtendimentoController.atendimentosConcluidos)
 
-router.get('/editar/:id', AtendimentoController.editar)
-router.post('/editar', AtendimentoController.salvar)
+router.get('/editar/:id', tecnicoLogado, AtendimentoController.editar)
+router.post('/editar', tecnicoLogado, AtendimentoController.salvar)
 
-router.get('/cancelar/:id', AtendimentoController.cancelar)
+router.get('/cancelar/:id', tecnicoLogado, AtendimentoController.cancelar)
 
 export default router

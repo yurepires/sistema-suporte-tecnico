@@ -49,8 +49,16 @@ app.use((req, res, next) => {
 
 // ROTAS DO SISTEMA
 
-app.get('/', (req, res) => {
-    res.render('admin/index')
+import { logado } from './config/rules.js'
+
+app.get('/', logado,(req, res) => {
+    if(req.user.tipo === 1){
+        res.render('admin/index')
+    } else if (req.user.tipo === 0) {
+        res.render('pessoa/home')
+    } else if (req.user.tipo === 2) {
+        res.render('tecnico/home')
+    }
 })
 
 import pessoa from './routes/pessoa.js'

@@ -1,14 +1,58 @@
-<div>
-    <h2>Chamados pendentes</h2>
-    <a href="/">Voltar</a>
-    <a href="/atendimentos/em-andamento">Atendimento em andamento</a>
-    <a href="/atendimentos/concluidos">Atendimentos concluídos</a>
-    {{#each chamados}}
-        <form action="/atendimentos/cadastro" method="post">
-            <h2>{{titulo}}</h2>
-            <p>{{descricao}}</p>
-            <p>{{status}}</p>
-            <button type="submit" name="chamado_id" value="{{id}}">Atender</button>
-        </form>
-    {{/each}}
+<div class="dashboard-content">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title">Chamados Pendentes</h5>
+                <div class="btn-group">
+                    <a href="/" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i>Voltar</a>
+                    <a href="/atendimentos/em-andamento" class="btn btn-outline-primary">
+                        <i class="bi bi-clock-history me-2"></i>Em Andamento
+                    </a>
+                    <a href="/atendimentos/concluidos" class="btn btn-outline-success">
+                        <i class="bi bi-check-circle me-2"></i>Concluídos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#if chamados.length}}
+    <div class="chamados-grid">
+        {{#each chamados}}
+        <div class="chamado-card">
+            <div class="chamado-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="chamado-titulo">#{{id}} - {{titulo}}</h5>
+                    <span class="badge bg-warning" style="margin-left: 8px;">{{status}}</span>
+                </div>
+            </div>
+
+            <div class="chamado-body">
+                <p class="chamado-descricao">{{descricao}}</p>
+
+                <form action="/atendimentos/cadastro" method="post" class="mt-3">
+                    <input type="hidden" name="chamado_id" value="{{id}}">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-headset me-2"></i>Atender Chamado
+                    </button>
+                </form>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    {{else}}
+    <div class="card">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+            <h5 class="mt-3">Nenhum chamado pendente</h5>
+            <p class="text-muted mb-0">Não há chamados aguardando atendimento no momento.</p>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="text-center mt-4">
+        <a href="/tecnicos/dashboard" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Voltar ao Dashboard
+        </a>
+    </div>
 </div>

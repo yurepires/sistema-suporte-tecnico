@@ -5,11 +5,6 @@ import bcrypt from 'bcrypt'
 
 class PessoaController{
 
-    index = async (req, res) => {
-        const pessoas = await Pessoa.findAll()
-        res.render('pessoa/index', {pessoas: pessoas})
-    }
-
     cadastrar = async (req, res) => {
         const pessoa = await Pessoa.findOne({
             where:{
@@ -54,11 +49,6 @@ class PessoaController{
     }
 
     editar = async (req, res) => {
-        
-        if(req.user === undefined){
-            req.flash('error_msg', 'Você deve estar logado para editar seus dados')
-            return res.redirect('/usuario/login')
-        }
 
         let usuario = {}
         if(req.params.id !== undefined){
@@ -104,11 +94,6 @@ class PessoaController{
     }
 
     excluir = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para excluir cadastro.')
-            return res.redirect('/usuario/login')
-        }
 
         let usuario = {}
         // Verifica se foi passado params e que tipo de usuario passou

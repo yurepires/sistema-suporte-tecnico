@@ -66,11 +66,6 @@ class AtendimentoController {
 
     atendimentoEmAndamento = async (req, res) => {
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login primeiro.')
-            return res.redirect('/usuario/login')
-        }
-
         const tecnico = await Tecnico.findOne({
             where:{
                 usuario_id: req.user.id
@@ -96,8 +91,6 @@ class AtendimentoController {
             titulo: chamado.titulo,
             descricao: chamado.descricao
         }
-
-        console.log(infos)
 
         //ache uma forma de mandar o atendimento com dados do chamado para a view
 
@@ -134,11 +127,6 @@ class AtendimentoController {
 
     atendimentosConcluidos = async (req, res) => {
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login primeiro.')
-            return res.redirect('/usuario/login')
-        }
-
         const tecnico = await Tecnico.findOne({
             where:{
                 usuario_id: req.user.id
@@ -156,11 +144,6 @@ class AtendimentoController {
     }
 
     editar = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para editar um atendimento.')
-            return res.redirect('/usuario/login')
-        }
 
         if(req.user.tipo !== 2){
             req.flash('error_msg', 'Apenas técnicos podem editar atendimentos.')

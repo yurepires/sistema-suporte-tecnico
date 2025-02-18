@@ -1,26 +1,58 @@
-<div>
-    <nav>
-        <a href="/atendimentos/concluidos">Voltar</a>
-    </nav>
-    <form action="/atendimentos/editar" method="post">
-        <fieldset>
-            <legend>Dados do atendimento</legend>
-
-            <div>
-                <label for="id">ID</label>
-                <input type="number" name="id" id="id" value="{{atendimento.id}}" readonly>
+<div class="dashboard-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="card-title">Editar Atendimento</h5>
+                <a href="/atendimentos/concluidos" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Voltar
+                </a>
             </div>
 
-            <div>
-                <label for="resumo">RESUMO</label>
-                <input type="text" value="{{atendimento.resumo}}" name="resumo" id="resumo" required>
-            </div>
+            <form action="/atendimentos/editar" method="post">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-hash"></i>
+                            </span>
+                            <input type="number" class="form-control bg-light" name="id" id="id"
+                                value="{{atendimento.id}}" readonly>
+                        </div>
+                    </div>
 
-            <div>
-                <label for="chamado_id">CHAMADO_ID</label>
-                <input type="text" value="{{atendimento.chamado_id}}" name="chamado_id" id="chamado_id" readonly>
-            </div>
-            <button type="submit">SALVAR</button>
-        </fieldset>
-    </form>
+                    <div class="col-md-3 mb-3">
+                        <label for="chamado_id" class="form-label">Chamado ID</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-ticket"></i>
+                            </span>
+                            <input type="text" class="form-control bg-light" name="chamado_id" id="chamado_id"
+                                value="{{atendimento.chamado_id}}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="resumo" class="form-label">Resumo do Atendimento</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-file-text"></i>
+                            </span>
+                            <textarea class="form-control" name="resumo" id="resumo" rows="4" required
+                                placeholder="Descreva as ações realizadas e a resolução do chamado...">{{atendimento.resumo}}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="/atendimentos/concluidos" class="btn btn-secondary">
+                        <i class="bi bi-x-lg me-2"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-2"></i>Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

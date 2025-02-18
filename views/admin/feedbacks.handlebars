@@ -2,37 +2,36 @@
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="card-title mb-0">Lista de Pessoas</h5>
-                <div>
-                    <a href="/" class="btn btn-outline-secondary back-button">Voltar</a>
-                    <a href="/pessoa/cadastro" class="btn btn-primary">
-                        <i class="bi bi-plus-lg me-2"></i>Nova Pessoa
-                    </a>
-                </div>
+                <h5 class="card-title mb-0">Lista de Feedbacks</h5>
+                <a href="/" class="btn btn-outline-secondary back-button">Voltar</a>
             </div>
 
             <div class="table-responsive">
                 <table class="table table-hover" style="max-width: 1200px; margin: 0 auto;">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Telefone</th>
-                            <th>Status</th>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Descrição</th>
+                            <th>Nota</th>
+                            <th>Usuário_ID</th>
+                            <th>Atendimento_ID</th>
+                            <th>Técnico_ID</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each pessoas}}
+                        {{#each feedbacks}}
                         <tr>
-                            <td>{{nome}}</td>
-                            <td>{{cpf}}</td>
-                            <td>{{telefone}}</td>
-                            <td>{{status}}</td>
+                            <td>{{id}}</td>
+                            <td>{{titulo}}</td>
+                            <td>{{descricao}}</td>
+                            <td>{{nota}}</td>
+                            <td>{{cliente_id}}</td>
+                            <td>{{atendimento_id}}</td>
+                            <td>{{tecnico_id}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a href="/pessoa/editar/{{id}}" class="btn btn-sm btn-outline-primary"><i
-                                            class="bi bi-pencil" style="margin-right: 10px;"></i>Editar</a>
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{id}}">
                                         <i class="bi bi-trash me-2"></i>Excluir
@@ -50,14 +49,14 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Tem certeza que deseja excluir o cadastro de "{{nome}}"? Esta ação não
+                                                Tem certeza que deseja excluir o feedback "{{titulo}}"? Esta ação não
                                                 pode ser desfeita.
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancelar</button>
                                                 <button type="button" class="btn btn-danger"
-                                                    onclick="adminExcluirPessoa({{id}})">
+                                                    onclick="excluirFeedback({{id}})">
                                                     Confirmar Exclusão
                                                 </button>
                                             </div>
@@ -73,32 +72,3 @@
         </div>
     </div>
 </div>
-
-{{!-- <div>
-    <nav>
-        <a href="/">Voltar</a>
-        <a href="/pessoa/cadastro">Novo</a>
-    </nav>
-    < <table>
-        <tr>
-            <th>ID</th>
-            <th>NOME</th>
-            <th>CPF</th>
-            <th>TELEFONE</th>
-            <th>STATUS</th>
-        </tr>
-        {{#each pessoas}}
-        <tr>
-            <td>{{id}}</td>
-            <td>{{nome}}</td>
-            <td>{{cpf}}</td>
-            <td>{{telefone}}</td>
-            <td>{{status}}</td>
-            <td>
-                <button onclick="adminExcluirPessoa({{id}})">Excluir</button>
-                <a href="/pessoa/editar/{{id}}">Editar</a>
-            </td>
-        </tr>
-        {{/each}}
-        </table>
-</div> --}}

@@ -2,20 +2,8 @@ import Tecnico from "../models/Tecnico.js";
 import Usuario from "../models/Usuario.js";
 import Pessoa from "../models/Pessoa.js";
 import bcrypt from "bcrypt"
-import { where } from "sequelize";
 
 class TecnicoController {
-
-    tecnicosAtivos = async (req, res) => {
-
-        const tecnicos = await Tecnico.findAll({
-            where:{
-                status: 1
-            }
-        })
-        
-        res.render('tecnico/index', {tecnicos: tecnicos})
-    }
 
     cadastrar = async (req, res) => {
         const pessoa = await Pessoa.findOne({
@@ -78,6 +66,9 @@ class TecnicoController {
 
                 Tecnico.create(novoTecnico).then(() => {
                     req.flash('success_msg', 'Técnico cadastrado com sucesso!')
+                    if(req.user.tipo === 1){
+                        return res.redirect('/admin/tecnicos')
+                    }
                     res.redirect('/usuario/login')
                 })
             })            
@@ -85,16 +76,6 @@ class TecnicoController {
     }
 
     editar = async (req, res) => {
-        
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para editar dados')
-            res.redirect('/usuario/login')
-        }
-
-        if(req.user.tipo === 0){
-            req.flash('error_msg', 'Você precisa ser técnico ou admin para acessar esta página')
-            res.redirect('/')
-        }
 
         let tecnico = {}
         if(req.params.id !== undefined){
@@ -113,15 +94,25 @@ class TecnicoController {
             })
         }
 
+        const usuario = await Usuario.findByPk(tecnico.usuario_id)
+
+        const pessoa = await Pessoa.findByPk(usuario.pessoa_id)
+
+        tecnico = {
+            id: tecnico.id,
+            nome: tecnico.nome,
+            disponibilidade: tecnico.disponibilidade,
+            avaliacao: tecnico.avaliacao,
+            qtdAtendimentos: tecnico.qtdAtendimentos,
+            cpf: pessoa.cpf,
+            telefone: pessoa.telefone,
+            email: usuario.email,
+        }
+
         res.render('tecnico/editar', {tecnico: tecnico})
     }
 
     salvar = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para editar dados')
-            res.redirect('/usuario/login')
-        }
 
         Tecnico.update({nome: req.body.nome}, {
             where:{
@@ -134,16 +125,6 @@ class TecnicoController {
     }
 
     excluir = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para excluir um funcionário!')
-            return res.redirect('/usuario/login')
-        }
-
-        if(req.user.tipo !== 1){
-            req.flash('error_msg', 'Apenas admins podem excluir outros funcionários.')
-            return res.redirect('/')
-        }
 
         const tecnico = await Tecnico.findByPk(req.params.id)
 

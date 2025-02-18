@@ -4,16 +4,10 @@ import Usuario from "../models/Usuario.js";
 import Tecnico from "../models/Tecnico.js";
 import Chamado from "../models/Chamado.js";
 import Atendimento from "../models/Atendimento.js";
+import Feedback from "../models/Feedback.js";
 
 class AdminController {
     listarPessoas = async (req, res) => {
-
-        if(req.user !== undefined){
-            if(req.user.tipo !== 1){
-                req.flash('error_msg', 'Apenas administradores podem acessar esta página.')
-                return res.redirect('/')
-            }
-        }
 
         const pessoas = await Pessoa.findAll()
 
@@ -34,12 +28,6 @@ class AdminController {
     }
 
     listarChamados = async (req, res) => {
-        if(req.user !== undefined){
-            if(req.user.tipo !== 1){
-                req.flash('error_msg', 'Apenas administradores podem acessar esta página.')
-                return res.redirect('/')
-            }
-        }
 
         const chamados = await Chamado.findAll({
             where:{
@@ -59,8 +47,7 @@ class AdminController {
                 titulo: chamado.titulo,
                 descricao: chamado.descricao,
                 status: chamado.status,
-                cliente: clientes.find(cliente => cliente.id === chamado.cliente_id),
-                tecnico: tecnicos.find(tecnico => tecnico.id === chamado.tecnico_id)
+                cliente: clientes.find(cliente => cliente.id === chamado.cliente_id)
             }
         })
 
@@ -77,6 +64,12 @@ class AdminController {
         const atendimentos = await Atendimento.findAll()
         
         res.render('admin/atendimentos', {atendimentos: atendimentos})
+    }
+
+    listarFeedbacks = async (req, res) => {
+        const feedbacks = await Feedback.findAll()
+
+        res.render('admin/feedbacks', {feedbacks: feedbacks})
     }
 }
 

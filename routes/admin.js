@@ -1,16 +1,19 @@
 import express from 'express'
 import AdminController from '../controllers/AdminController.js'
+import { adminLogado } from '../config/rules.js'
 
 const router = express.Router()
 
-router.get('/pessoas', AdminController.listarPessoas)
+router.get('/pessoas', adminLogado, AdminController.listarPessoas)
 
-router.get('/usuarios', AdminController.listarUsuarios)
+router.get('/usuarios', adminLogado, AdminController.listarUsuarios)
 
-router.get('/chamados', AdminController.listarChamados)
+router.get('/chamados', adminLogado, AdminController.listarChamados)
 
-router.get('/tecnicos', AdminController.listarTecnicos)
+router.get('/tecnicos', adminLogado, AdminController.listarTecnicos)
 
-router.get('/atendimentos', AdminController.listarAtendimentos)
+router.get('/atendimentos', adminLogado, AdminController.listarAtendimentos)
+
+router.get('/feedbacks', adminLogado, AdminController.listarFeedbacks)
 
 export default router

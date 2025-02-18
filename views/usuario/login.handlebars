@@ -1,9 +1,26 @@
-<h1>LOGIN</h1>
-<form method="post" action="/usuario/login">
-    <label>EMAIL</label>
-    <input type="email" name="email" required>
-    <label>SENHA</label>
-    <input type="password" name="senha" required>
-    <button type="submit">LOGIN</button>
-    <a href="/pessoa/cadastro">Não tem uma conta? Cadastre-se</a>
-</form>
+<div class="login-container">
+  <div class="login-box" style="margin-bottom: 120px;">
+    <h2 class="text-center mb-4">Login</h2>
+    <form action="/usuario/login" method="post">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-envelope"></i>
+          </span>
+          <input type="email" class="form-control" id="email" name="email" placeholder="seu@email.com" required autocomplete="email">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="bi bi-lock"></i>
+          </span>
+          <input type="password" class="form-control" id="senha" name="senha" placeholder="Sua senha" required autocomplete="current-password">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+  </div>
+</div>

@@ -1,8 +1,45 @@
-<h1>Cadastro de chamado</h1>
-<form method="post" action="/chamados/cadastro">
-    <label>TÍTULO</label>
-    <input type="text" name="titulo" required>
-    <label>DESCRICAO</label>
-    <input type="text" name="descricao" required>
-    <button type="submit">CADASTRAR</button>
-</form>
+<div class="dashboard-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="card-title">Novo Chamado</h5>
+                <a href="/chamados/meuschamados" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Voltar
+                </a>
+            </div>
+
+            <form action="/chamados/cadastro" method="post">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-ticket"></i>
+                            </span>
+                            <input type="text" class="form-control" name="titulo" id="titulo" required
+                                placeholder="Digite um título para o chamado">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-card-text"></i>
+                            </span>
+                            <textarea class="form-control" name="descricao" id="descricao" rows="4" required
+                                placeholder="Descreva detalhadamente o problema ou solicitação"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="/chamados/meuschamados" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-2"></i>Cadastrar Chamado
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

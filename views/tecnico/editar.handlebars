@@ -1,34 +1,116 @@
-<div>
-    <nav>
-        <a href="/">Voltar</a>
-    </nav>
-    <form action="/tecnico/editar" method="post">
-        <fieldset>
-            <legend>Seus dados</legend>
-            <div>
-                <label for="id">ID</label>
-                <input type="number" name="id" id="id" value="{{tecnico.id}}" readonly>
+<div class="dashboard-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="card-title">Meus Dados</h5>
+                <a href="/" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Voltar
+                </a>
             </div>
 
-            <div>
-                <label for="nome">NOME</label>
-                <input type="text" value="{{tecnico.nome}}" name="nome" id="nome" required>
-            </div>
+            <form action="/tecnico/editar" method="post">
+                <div class="row">
+                    <div class="col-md-2 mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-hash"></i>
+                            </span>
+                            <input type="number" class="form-control bg-light" name="id" id="id" value="{{tecnico.id}}"
+                                readonly>
+                        </div>
+                    </div>
 
-            <div>
-                <label for="disponibilidade">DISPONIBILIDADE</label>
-                <input type="text" value="{{tecnico.disponibilidade}}" name="disponibilidade" id="disponibilidade" readonly>
-            </div>
+                    <div class="col-md-10 mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-person"></i>
+                            </span>
+                            <input type="text" class="form-control" name="nome" id="nome" value="{{tecnico.nome}}"
+                                required placeholder="Digite seu nome completo">
+                        </div>
+                    </div>
 
-            <div>
-                <label for="avaliacao">AVALIAÇÃO</label>
-                <input type="text" value="{{tecnico.avaliacao}}" name="avaliacao" id="avaliacao" readonly>
-            </div>
-            <div>
-                <label for="qtdAtendimentos">QUANTIDADE DE ATENDIMENTOS</label>
-                <input type="text" value="{{tecnico.qtdAtendimentos}}" name="qtdAtendimentos" id="qtdAtendimentos" readonly>
-            </div>
-            <button type="submit">SALVAR</button>
-        </fieldset>
-    </form>
+                    <div class="col-md-4 mb-3">
+                        <label for="cpf" class="form-label">CPF</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-card-text"></i>
+                            </span>
+                            <input type="text" class="form-control" name="cpf" id="cpf" value="{{tecnico.cpf}}" required
+                                placeholder="000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+                                title="Digite um CPF válido no formato: 000.000.000-00">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-telephone"></i>
+                            </span>
+                            <input type="text" class="form-control" name="telefone" id="telefone"
+                                value="{{tecnico.telefone}}" required placeholder="(00) 00000-0000"
+                                pattern="\(\d{2}\)\s\d{5}-\d{4}"
+                                title="Digite um telefone válido no formato: (00) 00000-0000">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control bg-light" name="email" id="email"
+                                value="{{tecnico.email}}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="disponibilidade" class="form-label">Disponibilidade</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-calendar-check"></i>
+                            </span>
+                            <input type="text" class="form-control bg-light" name="disponibilidade" id="disponibilidade"
+                                value="{{tecnico.disponibilidade}}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="avaliacao" class="form-label">Avaliação</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-star"></i>
+                            </span>
+                            <input type="text" class="form-control bg-light" name="avaliacao" id="avaliacao"
+                                value="{{tecnico.avaliacao}}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label for="qtdAtendimentos" class="form-label">Quantidade de Atendimentos</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-headset"></i>
+                            </span>
+                            <input type="text" class="form-control bg-light" name="qtdAtendimentos" id="qtdAtendimentos"
+                                value="{{tecnico.qtdAtendimentos}}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-4">
+                    <a href="/" class="btn btn-secondary">
+                        <i class="bi bi-x-lg me-2"></i>Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-lg me-2"></i>Salvar Alterações
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

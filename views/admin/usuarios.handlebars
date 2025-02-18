@@ -1,25 +1,68 @@
-<div>
-    <nav>
-        <a href="/">Voltar</a>
-        <a href="/usuario/cadastro">Novo</a>
-    </nav>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>EMAIL</th>
-            <th>TIPO</th>
-            <th>STATUS</th>
-        </tr>
-        {{#each usuarios}}
-            <tr>
-                <td>{{id}}</td>
-                <td>{{email}}</td>
-                <td>{{tipo}}</td>
-                <td>{{status}}</td>
-                <td>
-                    <button onclick="adminExcluirUsuario({{id}})">Excluir</button>
-                </td>
-            </tr>
-        {{/each}}
-    </table>
+<div class="dashboard-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="card-title mb-0">Lista de Usuários</h5>
+                <div>
+                    <a href="/" class="btn btn-outline-secondary back-button">Voltar</a>
+                    <a href="/pessoa/cadastro" class="btn btn-primary">
+                        <i class="bi bi-plus-lg me-2"></i>Nova Pessoa
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover" style="max-width: 1200px; margin: 0 auto;">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>EMAIL</th>
+                            <th>TIPO</th>
+                            <th>STATUS</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each usuarios}}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{email}}</td>
+                            <td>{{tipo}}</td>
+                            <td>{{status}}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{id}}">
+                                    <i class="bi bi-trash me-2"></i>Excluir
+                                </button>
+                            </td>
+                        </tr>
+
+                        <div class="modal fade" id="deleteModal{{id}}" tabindex="-1"
+                            aria-labelledby="deleteModalLabel{{id}}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{id}}">Confirmar Exclusão</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tem certeza que deseja excluir este usuário?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="adminExcluirUsuario({{id}})">Confirmar
+                                            Exclusão</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

@@ -8,11 +8,6 @@ class ChamadoController {
 
     usuarioChamados = async (req, res) => {
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para ver seus chamados')
-            return res.redirect('/usuario/login')
-        }
-
         const chamados = await Chamado.findAll({
             where:{
                 cliente_id: req.user.id,
@@ -28,11 +23,6 @@ class ChamadoController {
     }
 
     formCadastro = async (req, res) => {
-
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para abrir um chamado')
-            return res.redirect('/usuario/login')
-        }
 
         if(req.user.tipo === 2){
             req.flash('error_msg', 'Técnicos não podem abrir chamados')
@@ -64,11 +54,6 @@ class ChamadoController {
     editar = async (req, res) => {
         const chamado = await Chamado.findByPk(req.params.id)
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para editar chamado!')
-            res.redirect('/usuario/login')
-        }
-
         if(!chamado){
             req.flash('error_msg', 'Chamado não encontrado.')
             return res.redirect('/chamados/meuschamados')
@@ -96,9 +81,11 @@ class ChamadoController {
     }
 
     excluir = async (req, res) => {
+        const chamado = await Chamado.findByPk(req.params.id)
+
         const atendimento = await Atendimento.findOne({
             where:{
-                chamado_id: req.params.id
+                chamado_id: chamado.id
             }
         })
 
@@ -120,7 +107,6 @@ class ChamadoController {
             })
         }
 
-        const chamado = await Chamado.findByPk(req.params.id)
         if(chamado.status !== 'Excluído'){
             Chamado.update({status: 'Excluído'}, {
                 where:{
@@ -128,7 +114,10 @@ class ChamadoController {
                 }
             }).then(() => {
                 req.flash('success_msg', 'Chamado excluído.')
-                return res.redirect('/chamados/meuschamados')
+                if(req.user.tipo === 1){
+                    return res.redirect('/admin/chamados')
+                }
+                res.redirect('/chamados/meuschamados')
             })
         }
     }

@@ -14,11 +14,6 @@ class UsuarioController {
 
     editar = async (req, res) => {
 
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para acessar esta página')
-            return res.redirect('/usuario/login')
-        }
-
         const usuario = await Usuario.findByPk(req.user.id)
 
         res.render('usuario/editar', {usuario: usuario})
@@ -34,8 +29,6 @@ class UsuarioController {
         const salt = await bcrypt.genSalt(10)
         const hashSenha = await bcrypt.hash(req.body.novaSenha, salt)
 
-        console.log(req.body.id)
-
         Usuario.update({senha: hashSenha}, {
             where:{
                 id: req.body.id
@@ -47,10 +40,6 @@ class UsuarioController {
     }
 
     excluir = async (req, res) => {
-        if(req.user === undefined){
-            req.flash('error_msg', 'Faça login para excluir cadastro.')
-            return res.redirect('/usuario/login')
-        }
 
         if(req.params.id !== undefined){
             if(req.user.tipo === 1){
@@ -67,6 +56,12 @@ class UsuarioController {
                 return res.redirect('/')
             }
         }
+    }
+
+    logout = (req, res, next) => {
+        req.logout((erro) => {
+            res.redirect('/usuario/login')
+        })
     }
 }
 

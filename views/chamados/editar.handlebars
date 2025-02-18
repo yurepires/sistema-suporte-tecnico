@@ -1,29 +1,94 @@
-<div>
-    <form action="/chamados/editar" method="post">
-        <fieldset>
-            <legend>Dados do chamado</legend>
+<div class="dashboard-content">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="card-title">Editar Chamado</h5>
+        <a href="/chamados/meuschamados" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left me-2"></i>Voltar
+        </a>
+      </div>
 
-            <div>
-                <label for="id">ID</label>
-                <input type="number" name="id" id="id" value="{{chamado.id}}" readonly>
+      <form action="/chamados/editar" method="post">
+        <div class="row">
+          <div class="col-md-2 mb-3">
+            <label for="id" class="form-label">ID</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-hash"></i>
+              </span>
+              <input 
+                type="number" 
+                class="form-control bg-light" 
+                name="id" 
+                id="id" 
+                value="{{chamado.id}}" 
+                readonly
+              >
             </div>
+          </div>
 
-            <div>
-                <label for="titulo">TÍTULO</label>
-                <input type="text" value="{{chamado.titulo}}" name="titulo" id="titulo" required>
+          <div class="col-md-4 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-flag"></i>
+              </span>
+              <input 
+                type="text" 
+                class="form-control bg-light" 
+                name="status" 
+                id="status" 
+                value="{{chamado.status}}" 
+                readonly
+              >
             </div>
+          </div>
 
-            <div>
-                <label for="descricao">DESCRICAO</label>
-                <input type="text" value="{{chamado.descricao}}" name="descricao" id="descricao" required>
+          <!-- Título -->
+          <div class="col-md-6 mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-ticket"></i>
+              </span>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="titulo" 
+                id="titulo" 
+                value="{{chamado.titulo}}" 
+                required
+                placeholder="Digite o título do chamado"
+              >
             </div>
+          </div>
 
-            <div>
-                <label for="status">STATUS</label>
-                <input type="text" value="{{chamado.status}}" name="status" id="status" readonly>
+          <!-- Descrição -->
+          <div class="col-md-12 mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-card-text"></i>
+              </span>
+              <textarea 
+                class="form-control" 
+                name="descricao" 
+                id="descricao" 
+                rows="4" 
+                required
+                placeholder="Descreva o problema ou solicitação"
+              >{{chamado.descricao}}</textarea>
             </div>
+          </div>
+        </div>
 
-            <button type="submit">SALVAR</button>
-        </fieldset>
-    </form>
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <a href="/clientes/chamados" class="btn btn-secondary">Cancelar</a>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-lg me-2"></i>Salvar Alterações
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
