@@ -5,9 +5,10 @@ import Pessoa from "./Pessoa.js";
 import Tecnico from "./Tecnico.js";
 import Usuario from "./Usuario.js";
 
-// Pessoa.sync()
-// Usuario.sync()
-// Tecnico.sync()
-// Chamado.sync()
-// Atendimento.sync()
-// Feedback.sync()
+// sequencia correta para criar cada tabela
+Pessoa.sync()
+    .then(() => Usuario.sync())
+    .then(() => Tecnico.sync())
+    .then(() => Chamado.sync())
+    .then(() => Atendimento.sync())
+    .then(() => Feedback.sync());
