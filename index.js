@@ -21,7 +21,16 @@ app.use(express.static(path.join(__dirname, 'public')))
 // CONFIGURAÇÃO DA VISÃO
 app.engine('handlebars', handlebars.engine({
     defaultLayout: 'main',
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+    helpers: {
+        // Helper personalizado 'ifCond'
+        ifCond: function (v1, v2, options) {
+          if (v1 === v2) {
+            return options.fn(this);  // Se as condições forem iguais, executa o conteúdo dentro do bloco {{#ifCond}}
+          }
+          return options.inverse(this);  // Se as condições não forem iguais, executa o conteúdo dentro do bloco {{else}}
+        }
+    }
 }))
 app.set('view engine', 'handlebars')
 
@@ -51,13 +60,16 @@ app.use((req, res, next) => {
 
 import { logado } from './config/rules.js'
 
-app.get('/', logado, (req, res) => {
+app.get('/', logado, async (req, res) => {
+
+    const pessoa = await Pessoa.findByPk(req.user.pessoa_id)
+
     if(req.user.tipo === 1){
-        res.render('admin/index')
+        res.render('admin/index', {pessoa: pessoa})
     } else if (req.user.tipo === 0) {
-        res.render('pessoa/home')
+        res.render('pessoa/home', {pessoa: pessoa})
     } else if (req.user.tipo === 2) {
-        res.render('tecnico/home')
+        res.render('tecnico/home', {pessoa: pessoa})
     }
 })
 
@@ -80,6 +92,7 @@ import feedback from './routes/feedback.js'
 app.use('/feedback', feedback)
 
 import admin from './routes/admin.js'
+import Pessoa from './models/Pessoa.js'
 app.use('/admin', admin)
 
 app.listen(port, () => {

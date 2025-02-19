@@ -258,6 +258,18 @@
     max-width: 400px;
 }
 
+.login-box a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-box a:hover {
+    text-decoration: underline;
+}
+
 .login-box h2 {
     color: #212529;
     font-weight: 600;

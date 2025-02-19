@@ -47,7 +47,10 @@ class ChamadoController {
         }
         Chamado.create(novoChamado).then(() => {
             req.flash('success_msg', 'Chamado cadastrado com sucesso!')
-            res.redirect('/')
+            if(req.user.tipo === 1){
+                return res.redirect('/admin/chamados')
+            }
+            res.redirect('/chamados/meuschamados')
         })
     }
 

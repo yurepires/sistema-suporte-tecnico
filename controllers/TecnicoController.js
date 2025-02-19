@@ -81,7 +81,6 @@ class TecnicoController {
         if(req.params.id !== undefined){
             if(req.user.tipo === 1){
                 tecnico = await Tecnico.findByPk(req.params.id)
-                return res.render('tecnico/editar', {tecnico: tecnico})
             } else {
                 req.flash('error_msg', 'Apenas administradores podem editar outros técnicos!')
                 return res.redirect('/')
@@ -114,12 +113,28 @@ class TecnicoController {
 
     salvar = async (req, res) => {
 
+        const tecnico = await Tecnico.findByPk(req.body.id)
+
+        const usuario = await Usuario.findByPk(tecnico.usuario_id)
+
+        Pessoa.update({
+            cpf: req.body.cpf,
+            telefone: req.body.telefone
+        }, {
+            where:{
+                id: usuario.pessoa_id
+            }
+        })
+
         Tecnico.update({nome: req.body.nome}, {
             where:{
-                usuario_id: req.user.id
+                usuario_id: usuario.id
             }
         }).then(() => {
             req.flash('success_msg', 'Técnico editado com sucesso.')
+            if(req.user.tipo === 1){
+                return res.redirect('/admin/tecnicos')
+            }
             res.redirect('/')
         })
     }
